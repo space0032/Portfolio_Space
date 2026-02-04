@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 interface Skill {
   name: string;
@@ -16,7 +16,12 @@ const skills: Skill[] = [
   { name: "TypeScript", level: 85, projects: 6, icon: "📘" },
   { name: "Node.js", level: 80, projects: 7, icon: "🟢" },
   { name: "Next.js", level: 88, projects: 5, icon: "▲" },
-  { name: "Java", level: 90, projects: 10, icon: "☕" },
+  {
+    name: "Java",
+    level: 90,
+    projects: 10,
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+  },
   { name: "MongoDB", level: 75, projects: 5, icon: "🍃" },
   { name: "Python", level: 70, projects: 4, icon: "🐍" },
   { name: "Docker", level: 65, projects: 3, icon: "🐳" },
@@ -59,14 +64,18 @@ const SkillsSection = () => {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <motion.span
-                      className="text-3xl"
+                      className="text-3xl flex items-center justify-center w-8 h-8"
                       animate={{
                         scale: hoveredSkill === skill.name ? 1.2 : 1,
                         rotate: hoveredSkill === skill.name ? 360 : 0,
                       }}
                       transition={{ duration: 0.5 }}
                     >
-                      {skill.icon}
+                      {skill.icon.startsWith("http") ? (
+                        <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain" />
+                      ) : (
+                        skill.icon
+                      )}
                     </motion.span>
                     <div>
                       <h3 className="text-xl font-bold text-white">

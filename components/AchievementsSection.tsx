@@ -81,7 +81,7 @@ const experiences: Experience[] = [
         year: "2025",
         description: "Developed robust backend systems using Java and Spring Boot. Focused on building scalable microservices and implementing DevOps practices.",
         technologies: ["Java", "Spring Boot", "MySQL", "Docker"],
-        icon: "☕",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
     },
     {
         id: 2,
@@ -166,8 +166,8 @@ const AchievementsSection = () => {
                                     <motion.div
                                         key={cert.id}
                                         className={`relative p-6 rounded-2xl border ${cert.featured
-                                                ? "bg-gradient-to-br from-yellow-900/30 to-orange-900/30 border-yellow-500"
-                                                : "bg-gray-800 border-gray-700"
+                                            ? "bg-gradient-to-br from-yellow-900/30 to-orange-900/30 border-yellow-500"
+                                            : "bg-gray-800 border-gray-700"
                                             } hover:border-yellow-500 transition-colors`}
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
@@ -189,7 +189,11 @@ const AchievementsSection = () => {
                                             }}
                                             transition={{ duration: 0.5 }}
                                         >
-                                            {cert.icon}
+                                            {cert.icon.startsWith("http") ? (
+                                                <img src={cert.icon} alt={cert.name} className="w-12 h-12 object-contain mx-auto" />
+                                            ) : (
+                                                cert.icon
+                                            )}
                                         </motion.div>
                                         <h3 className="text-xl font-bold text-white mb-2">
                                             {cert.name}
@@ -230,7 +234,11 @@ const AchievementsSection = () => {
                                             }}
                                             transition={{ duration: 0.5 }}
                                         >
-                                            {achievement.icon}
+                                            {achievement.icon.startsWith("http") ? (
+                                                <img src={achievement.icon} alt={achievement.title} className="w-12 h-12 object-contain mx-auto" />
+                                            ) : (
+                                                achievement.icon
+                                            )}
                                         </motion.div>
                                         <h3 className="text-xl font-bold text-white mb-2">
                                             {achievement.title}
@@ -270,7 +278,11 @@ const AchievementsSection = () => {
                                             }}
                                             transition={{ duration: 0.3 }}
                                         >
-                                            {exp.icon}
+                                            {exp.icon.startsWith("http") ? (
+                                                <img src={exp.icon} alt={exp.role} className="w-12 h-12 object-contain" />
+                                            ) : (
+                                                exp.icon
+                                            )}
                                         </motion.div>
                                         <div className="flex items-center justify-between mb-2">
                                             <h3 className="text-xl font-bold text-white">{exp.role}</h3>
