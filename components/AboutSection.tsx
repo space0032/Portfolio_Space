@@ -66,24 +66,17 @@ const AboutSection = () => {
           {/* About text */}
           <motion.div variants={itemVariants}>
             <p className="text-lg text-gray-300 mb-6">
-              I&apos;m Antariksh Mankar, a passionate software developer with expertise in building modern,
-              scalable, and user-friendly web applications. With a strong
-              foundation in both frontend and backend technologies, I create
-              seamless digital experiences that solve real-world problems.
+              I&apos;m Antariksh Mankar, ​A dedicated Backend Developer with a strong focus on DevOps. 🚀 I'm a proven problem-solver, having secured first place in my college's internal hackathon. My expertise lies in automating workflows and building scalable systems using Java and React.js.
             </p>
             <p className="text-lg text-gray-300 mb-6">
-              My journey in software development has been driven by continuous learning
-              and a commitment to excellence. I specialize in full-stack development,
-              working with cutting-edge technologies to deliver high-quality solutions
-              that make a difference.
+              I am a Microsoft Certified DevOps Engineer Expert, and my skills are further validated by recent certifications from IBM and Oracle. I'm passionate about bridging the gap between development and operations to deliver high-quality, efficient solutions. I am actively seeking roles where I can leverage my DevOps knowledge to improve team productivity and software reliability. 💡.
             </p>
 
             {/* Timeline achievements */}
             <motion.div className="space-y-4 mt-8" variants={itemVariants}>
               {[
-                { year: "2024", title: "Software Developer" },
-                { year: "2023", title: "Full Stack Development" },
-                { year: "2022", title: "Started Professional Journey" },
+                { year: "2025", title: "Java Developer" },
+                { year: "2026", title: "Software Developer" }
               ].map((achievement, index) => (
                 <motion.div
                   key={index}
