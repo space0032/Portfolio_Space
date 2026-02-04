@@ -1,6 +1,8 @@
 # Interactive Developer Portfolio
 
-A modern, interactive portfolio website built with Next.js, React, Framer Motion, and TailwindCSS. Features smooth animations, dynamic interactions, and a polished user experience.
+![CI/CD Pipeline](https://github.com/space0032/Portfolio_Space/workflows/CI/CD%20Pipeline/badge.svg)
+
+A modern, interactive portfolio website built with Next.js, React, Framer Motion, and TailwindCSS. Features smooth animations, dynamic interactions, automated CI/CD pipeline, and a polished user experience.
 
 ## 🎨 Features
 
@@ -153,6 +155,49 @@ animation: {
   // Customize duration and easing
 }
 ```
+
+## 🔄 CI/CD Pipeline
+
+This project includes automated CI/CD workflows using GitHub Actions.
+
+### Automated Workflows
+
+#### 1. **CI/CD Pipeline** (`.github/workflows/ci.yml`)
+Automatically runs on every push and pull request:
+- ✅ Builds the project on Node.js 18.x and 20.x
+- ✅ Runs ESLint for code quality
+- ✅ Creates production build
+- ✅ Uploads build artifacts
+
+#### 2. **Vercel Deployment** (`.github/workflows/deploy-vercel.yml`)
+Automatically deploys to Vercel on push to main branch:
+- 🚀 Builds optimized production bundle
+- 🚀 Deploys to Vercel hosting
+- 🚀 Provides preview URLs for pull requests
+
+### Setup CI/CD
+
+1. **Enable GitHub Actions**:
+   - Push your code to GitHub
+   - Workflows will run automatically
+
+2. **View Workflow Status**:
+   - Go to the "Actions" tab in your repository
+   - See build status and logs
+
+3. **Configure Vercel Deployment** (Optional):
+   ```bash
+   # Install Vercel CLI
+   npm i -g vercel
+   
+   # Login to Vercel
+   vercel login
+   
+   # Get your token from https://vercel.com/account/tokens
+   # Add as GitHub secret: VERCEL_TOKEN
+   ```
+
+For detailed CI/CD documentation, see [`.github/workflows/README.md`](.github/workflows/README.md)
 
 ## 🚢 Deployment
 

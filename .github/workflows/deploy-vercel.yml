@@ -1,0 +1,44 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install Vercel CLI
+      run: npm install --global vercel@latest
+
+    - name: Pull Vercel Environment Information
+      run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+    - name: Build Project Artifacts
+      run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+    - name: Deploy Project Artifacts to Vercel
+      run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+# To use this workflow:
+# 1. Sign up at https://vercel.com
+# 2. Install Vercel CLI: npm i -g vercel
+# 3. Run: vercel login
+# 4. Get your token from: https://vercel.com/account/tokens
+# 5. Add the token as a GitHub secret named VERCEL_TOKEN:
+#    - Go to your repo Settings > Secrets and variables > Actions
+#    - Click "New repository secret"
+#    - Name: VERCEL_TOKEN
+#    - Value: Your Vercel token
+# 6. Link your project: vercel link
+# 7. Push to main branch to trigger deployment
