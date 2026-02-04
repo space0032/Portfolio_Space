@@ -10,41 +10,64 @@ interface Project {
   description: string;
   techStack: string[];
   demoLink: string;
+  githubLink: string;
   image: string;
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "A full-featured e-commerce platform with cart, payment integration, and admin panel.",
-    techStack: ["React", "Node.js", "MongoDB", "Stripe"],
-    demoLink: "#",
-    image: "🛒",
+    title: "Smart Attendance System",
+    description: "An intelligent attendance tracking system built with Java and Spring Boot. Features automated attendance management, real-time tracking, and comprehensive reporting capabilities.",
+    techStack: ["Java", "Spring Boot", "MySQL", "REST API"],
+    demoLink: "https://github.com/space0032/smart_attandance_system",
+    githubLink: "https://github.com/space0032/smart_attandance_system",
+    image: "📋",
   },
   {
     id: 2,
-    title: "Task Management App",
-    description: "Collaborative task management tool with real-time updates and team features.",
-    techStack: ["Next.js", "TypeScript", "Firebase", "TailwindCSS"],
-    demoLink: "#",
-    image: "✅",
+    title: "College Management System",
+    description: "A comprehensive college management platform with student enrollment, course management, and administrative features. Built with modern Java technologies.",
+    techStack: ["Java", "Spring Framework", "MySQL", "JPA"],
+    demoLink: "https://github.com/space0032/College-Management-2",
+    githubLink: "https://github.com/space0032/College-Management-2",
+    image: "🎓",
   },
   {
     id: 3,
-    title: "Weather Dashboard",
-    description: "Real-time weather dashboard with forecasts, maps, and location-based data.",
-    techStack: ["React", "OpenWeather API", "Chart.js", "CSS3"],
-    demoLink: "#",
-    image: "🌤️",
+    title: "Smart Clinic Management",
+    description: "Healthcare management system for clinics with patient records, appointment scheduling, and medical history tracking. Features a modern JavaScript-based interface.",
+    techStack: ["JavaScript", "Node.js", "React", "MongoDB"],
+    demoLink: "https://github.com/space0032/Smart-Clinic-Management-System",
+    githubLink: "https://github.com/space0032/Smart-Clinic-Management-System",
+    image: "🏥",
   },
   {
     id: 4,
-    title: "Portfolio Website",
-    description: "Modern portfolio with animations, dark mode, and responsive design.",
-    techStack: ["Next.js", "Framer Motion", "TailwindCSS", "TypeScript"],
-    demoLink: "#",
-    image: "💼",
+    title: "Hackathon Voting System",
+    description: "Real-time voting platform for hackathons with secure authentication, live vote counting, and admin dashboard. Built with TypeScript and Next.js.",
+    techStack: ["TypeScript", "Next.js", "React", "TailwindCSS"],
+    demoLink: "https://github.com/space0032/Hackathon_Voting_System",
+    githubLink: "https://github.com/space0032/Hackathon_Voting_System",
+    image: "🗳️",
+  },
+  {
+    id: 5,
+    title: "Java Validation Sanitizer",
+    description: "A robust Java library for input validation and sanitization. Helps prevent security vulnerabilities like SQL injection and XSS attacks.",
+    techStack: ["Java", "Security", "Validation", "Testing"],
+    demoLink: "https://github.com/space0032/java-validation-sanitizer",
+    githubLink: "https://github.com/space0032/java-validation-sanitizer",
+    image: "🔒",
+  },
+  {
+    id: 6,
+    title: "Data Science Projects",
+    description: "Collection of data science projects and Jupyter notebooks covering machine learning, data analysis, and visualization techniques.",
+    techStack: ["Python", "Jupyter", "Pandas", "Machine Learning"],
+    demoLink: "https://github.com/space0032/Tutudude_DataScience",
+    githubLink: "https://github.com/space0032/Tutudude_DataScience",
+    image: "📊",
   },
 ];
 
@@ -77,7 +100,7 @@ const ProjectsSection = () => {
           My <span className="text-purple-500">Projects</span>
         </motion.h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -164,11 +187,13 @@ const ProjectsSection = () => {
                   </div>
 
                   <a
-                    href={project.demoLink}
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block px-4 py-2 bg-white text-purple-900 rounded-lg font-semibold hover:bg-gray-200 transition-colors mt-auto"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    View Demo →
+                    View on GitHub →
                   </a>
                 </div>
               </motion.div>

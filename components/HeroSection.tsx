@@ -1,31 +1,53 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const HeroSection = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [particles, setParticles] = useState<Array<{
+    id: number;
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+    duration: number;
+  }>>([]);
+
+  // Generate particles only on client side to avoid hydration errors
+  useEffect(() => {
+    setParticles(
+      [...Array(50)].map((_, i) => ({
+        id: i,
+        width: Math.random() * 4 + 1,
+        height: Math.random() * 4 + 1,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        duration: Math.random() * 3 + 2,
+      }))
+    );
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-black">
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
+        {particles.map((particle) => (
           <motion.div
-            key={i}
+            key={particle.id}
             className="absolute rounded-full bg-white"
             style={{
-              width: Math.random() * 4 + 1,
-              height: Math.random() * 4 + 1,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              width: particle.width,
+              height: particle.height,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
             }}
             animate={{
               y: [0, -30, 0],
               opacity: [0.2, 0.5, 0.2],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: particle.duration,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -76,7 +98,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           {[
-            { name: "GitHub", url: "#" },
+            { name: "GitHub", url: "https://github.com/space0032" },
             { name: "LinkedIn", url: "https://www.linkedin.com/in/antariksh-mankar/" },
             { name: "Twitter", url: "#" },
           ].map((social, index) => (
@@ -99,7 +121,7 @@ const HeroSection = () => {
 
         {/* Glowing Contact Me button */}
         <motion.button
-          className="relative px-8 py-4 text-lg font-semibold text-white rounded-full overflow-hidden"
+          className="relative px-8 py-4 text-lg font-semibold text-white rounded-full overflow-hidden cursor-pointer"
           style={{
             background: isHovered
               ? "linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
@@ -107,6 +129,10 @@ const HeroSection = () => {
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onClick={() => {
+            const contactSection = document.getElementById('contact');
+            contactSection?.scrollIntoView({ behavior: 'smooth' });
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
@@ -123,23 +149,27 @@ const HeroSection = () => {
           />
           <span className="relative z-10">Contact Me</span>
         </motion.button>
-
-        {/* Scroll down indicator */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <div className="text-white text-sm">Scroll Down</div>
-          <div className="mt-2 mx-auto w-6 h-10 border-2 border-white rounded-full flex justify-center">
-            <motion.div
-              className="w-1 h-2 bg-white rounded-full mt-2"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-          </div>
-        </motion.div>
       </div>
+
+      {/* Scroll down indicator */}
+      <motion.div
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 cursor-pointer z-20 text-center"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+        onClick={() => {
+          const aboutSection = document.getElementById('about');
+          aboutSection?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      >
+        <div className="text-white text-sm text-center">Scroll Down</div>
+        <div className="mt-2 mx-auto w-6 h-10 border-2 border-white rounded-full flex justify-center items-center">
+          <motion.div
+            className="w-1 h-2 bg-white rounded-full"
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+        </div>
+      </motion.div>
     </section>
   );
 };

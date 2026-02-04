@@ -7,20 +7,19 @@ import { useRef, useState } from "react";
 interface Skill {
   name: string;
   level: number;
-  experience: string;
   projects: number;
   icon: string;
 }
 
 const skills: Skill[] = [
-  { name: "React.js", level: 90, experience: "5 years", projects: 8, icon: "⚛️" },
-  { name: "TypeScript", level: 85, experience: "4 years", projects: 6, icon: "📘" },
-  { name: "Node.js", level: 80, experience: "4 years", projects: 7, icon: "🟢" },
-  { name: "Next.js", level: 88, experience: "3 years", projects: 5, icon: "▲" },
-  { name: "TailwindCSS", level: 92, experience: "3 years", projects: 10, icon: "🎨" },
-  { name: "MongoDB", level: 75, experience: "3 years", projects: 5, icon: "🍃" },
-  { name: "Python", level: 70, experience: "2 years", projects: 4, icon: "🐍" },
-  { name: "Docker", level: 65, experience: "2 years", projects: 3, icon: "🐳" },
+  { name: "React.js", level: 90, projects: 8, icon: "⚛️" },
+  { name: "TypeScript", level: 85, projects: 6, icon: "📘" },
+  { name: "Node.js", level: 80, projects: 7, icon: "🟢" },
+  { name: "Next.js", level: 88, projects: 5, icon: "▲" },
+  { name: "TailwindCSS", level: 92, projects: 10, icon: "🎨" },
+  { name: "MongoDB", level: 75, projects: 5, icon: "🍃" },
+  { name: "Python", level: 70, projects: 4, icon: "🐍" },
+  { name: "Docker", level: 65, projects: 3, icon: "🐳" },
 ];
 
 const SkillsSection = () => {
@@ -102,12 +101,6 @@ const SkillsSection = () => {
                 >
                   <div className="pt-2 border-t border-gray-700 mt-2">
                     <p className="text-gray-400 text-sm">
-                      <span className="text-green-400 font-semibold">
-                        {skill.experience}
-                      </span>{" "}
-                      of experience
-                    </p>
-                    <p className="text-gray-400 text-sm">
                       Completed{" "}
                       <span className="text-blue-400 font-semibold">
                         {skill.projects} projects
@@ -141,20 +134,30 @@ const SkillsSection = () => {
             Other Technologies
           </h3>
           <div className="flex flex-wrap gap-3 justify-center">
-            {["Git", "GraphQL", "REST APIs", "AWS", "Redis", "PostgreSQL", "Jest", "CI/CD"].map(
-              (tech, index) => (
-                <motion.span
-                  key={tech}
-                  className="px-4 py-2 bg-gray-800 text-gray-300 rounded-full border border-gray-700 hover:border-blue-500 hover:text-blue-400 transition-all cursor-pointer"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.3, delay: 0.9 + index * 0.05 }}
-                  whileHover={{ scale: 1.1, y: -5 }}
-                >
-                  {tech}
-                </motion.span>
-              )
-            )}
+            {[
+              { name: "Git", url: "https://git-scm.com/" },
+              { name: "GraphQL", url: "https://graphql.org/" },
+              { name: "REST APIs", url: "https://restfulapi.net/" },
+              { name: "AWS", url: "https://aws.amazon.com/" },
+              { name: "Redis", url: "https://redis.io/" },
+              { name: "PostgreSQL", url: "https://www.postgresql.org/" },
+              { name: "Jest", url: "https://jestjs.io/" },
+              { name: "CI/CD", url: "https://www.redhat.com/en/topics/devops/what-is-ci-cd" },
+            ].map((tech, index) => (
+              <motion.a
+                key={tech.name}
+                href={tech.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-gray-800 text-gray-300 rounded-full border border-gray-700 hover:border-blue-500 hover:text-blue-400 transition-all cursor-pointer"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.3, delay: 0.9 + index * 0.05 }}
+                whileHover={{ scale: 1.1, y: -5 }}
+              >
+                {tech.name}
+              </motion.a>
+            ))}
           </div>
         </motion.div>
       </div>
