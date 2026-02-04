@@ -54,6 +54,13 @@ const ProjectsSection = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [flippedId, setFlippedId] = useState<number | null>(null);
 
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <section
       ref={ref}
@@ -167,6 +174,16 @@ const ProjectsSection = () => {
               </motion.div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Add a "Contact Me" button */}
+        <div className="text-center mt-12">
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all"
+          >
+            Contact Me
+          </button>
         </div>
       </div>
     </section>
