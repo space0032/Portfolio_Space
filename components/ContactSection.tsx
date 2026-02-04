@@ -121,7 +121,7 @@ const ContactSection = () => {
 
             <div className="space-y-4 mt-8">
               {[
-                { icon: "📧", label: "Email", value: "antariksh.mankar@example.com" },
+                { icon: "📧", label: "Email", value: "contact@antarikshmankar.dev" },
                 { icon: "💼", label: "LinkedIn", value: "linkedin.com/in/antariksh-mankar" },
                 { icon: "📍", label: "Location", value: "India" },
               ].map((item, index) => (
