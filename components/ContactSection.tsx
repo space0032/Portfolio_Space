@@ -72,7 +72,7 @@ const ContactSection = () => {
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
