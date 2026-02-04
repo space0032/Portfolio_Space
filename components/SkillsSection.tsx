@@ -16,7 +16,7 @@ const skills: Skill[] = [
   { name: "TypeScript", level: 85, projects: 6, icon: "📘" },
   { name: "Node.js", level: 80, projects: 7, icon: "🟢" },
   { name: "Next.js", level: 88, projects: 5, icon: "▲" },
-  { name: "TailwindCSS", level: 92, projects: 10, icon: "🎨" },
+  { name: "Java", level: 90, projects: 10, icon: "☕" },
   { name: "MongoDB", level: 75, projects: 5, icon: "🍃" },
   { name: "Python", level: 70, projects: 4, icon: "🐍" },
   { name: "Docker", level: 65, projects: 3, icon: "🐳" },
