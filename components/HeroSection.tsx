@@ -43,7 +43,7 @@ const HeroSection = () => {
         >
           Hi, I&apos;m{" "}
           <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Your Name
+            Antariksh Mankar
           </span>
         </motion.h1>
 
@@ -54,7 +54,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
         >
-          Full Stack Developer & Creative Designer
+          Software Developer | Full Stack Engineer | Tech Enthusiast
         </motion.p>
 
         {/* Animated profile image placeholder */}
@@ -75,10 +75,16 @@ const HeroSection = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          {["GitHub", "LinkedIn", "Twitter"].map((social, index) => (
+          {[
+            { name: "GitHub", url: "#" },
+            { name: "LinkedIn", url: "https://www.linkedin.com/in/antariksh-mankar/" },
+            { name: "Twitter", url: "#" },
+          ].map((social, index) => (
             <motion.a
-              key={social}
-              href="#"
+              key={social.name}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg border border-gray-600 hover:border-blue-500"
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
@@ -86,7 +92,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 + index * 0.1 }}
             >
-              {social}
+              {social.name}
             </motion.a>
           ))}
         </motion.div>

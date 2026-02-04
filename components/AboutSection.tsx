@@ -66,23 +66,24 @@ const AboutSection = () => {
           {/* About text */}
           <motion.div variants={itemVariants}>
             <p className="text-lg text-gray-300 mb-6">
-              I&apos;m a passionate developer with expertise in building modern,
-              responsive, and user-friendly web applications. With a strong
+              I&apos;m Antariksh Mankar, a passionate software developer with expertise in building modern,
+              scalable, and user-friendly web applications. With a strong
               foundation in both frontend and backend technologies, I create
-              seamless digital experiences.
+              seamless digital experiences that solve real-world problems.
             </p>
             <p className="text-lg text-gray-300 mb-6">
-              My journey in web development started with a curiosity for how
-              things work on the internet, and it has evolved into a career
-              focused on creating innovative solutions.
+              My journey in software development has been driven by continuous learning
+              and a commitment to excellence. I specialize in full-stack development,
+              working with cutting-edge technologies to deliver high-quality solutions
+              that make a difference.
             </p>
 
             {/* Timeline achievements */}
             <motion.div className="space-y-4 mt-8" variants={itemVariants}>
               {[
-                { year: "2024", title: "Senior Full Stack Developer" },
-                { year: "2022", title: "Web Development Bootcamp Graduate" },
-                { year: "2020", title: "Started Coding Journey" },
+                { year: "2024", title: "Software Developer" },
+                { year: "2023", title: "Full Stack Development" },
+                { year: "2022", title: "Started Professional Journey" },
               ].map((achievement, index) => (
                 <motion.div
                   key={index}
