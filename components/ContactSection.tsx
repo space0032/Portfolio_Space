@@ -58,7 +58,7 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -121,25 +121,51 @@ const ContactSection = () => {
 
             <div className="space-y-4 mt-8">
               {[
-                { icon: "📧", label: "Email", value: "antariksh.mankar43@gmail.com" },
-                { icon: "💼", label: "LinkedIn", value: "linkedin.com/in/antariksh-mankar" },
-                { icon: "📍", label: "Location", value: "India" },
-              ].map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  className="flex items-center gap-4 p-4 bg-gray-800 rounded-lg border border-gray-700 hover:border-blue-500 transition-colors"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  whileHover={{ x: 10 }}
-                >
-                  <span className="text-3xl">{item.icon}</span>
-                  <div>
-                    <div className="text-gray-400 text-sm">{item.label}</div>
-                    <div className="text-white font-semibold">{item.value}</div>
-                  </div>
-                </motion.div>
-              ))}
+                {
+                  icon: "📧",
+                  label: "Email",
+                  value: "antariksh.mankar43@gmail.com",
+                  href: "mailto:antariksh.mankar43@gmail.com"
+                },
+                {
+                  icon: "💼",
+                  label: "LinkedIn",
+                  value: "linkedin.com/in/antariksh-mankar",
+                  href: "https://www.linkedin.com/in/antariksh-mankar/"
+                },
+                {
+                  icon: "📍",
+                  label: "Location",
+                  value: "Gandhinagar, Gujarat, India",
+                  href: null
+                },
+              ].map((item, index) => {
+                const isLink = !!item.href;
+                const Component = isLink ? motion.a : motion.div;
+
+                return (
+                  <Component
+                    key={item.label}
+                    href={item.href || undefined}
+                    target={item.label === "LinkedIn" ? "_blank" : undefined}
+                    rel={item.label === "LinkedIn" ? "noopener noreferrer" : undefined}
+                    className={`flex items-center gap-4 p-4 bg-gray-800 rounded-lg border border-gray-700 transition-colors ${isLink ? "cursor-pointer hover:border-blue-500 hover:bg-gray-800/80" : ""
+                      }`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.4 + index * 0.1 }}
+                    whileHover={isLink ? { x: 10 } : {}}
+                  >
+                    <span className="text-3xl">{item.icon}</span>
+                    <div>
+                      <div className="text-gray-400 text-sm">{item.label}</div>
+                      <div className={`text-white font-semibold ${isLink ? "group-hover:text-blue-400" : ""}`}>
+                        {item.value}
+                      </div>
+                    </div>
+                  </Component>
+                );
+              })}
             </div>
           </motion.div>
 
@@ -160,9 +186,8 @@ const ContactSection = () => {
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
-                  className={`w-full px-4 py-3 bg-gray-800 text-white rounded-lg border ${
-                    errors.name ? "border-red-500" : "border-gray-700"
-                  } focus:outline-none focus:border-blue-500 transition-colors`}
+                  className={`w-full px-4 py-3 bg-gray-800 text-white rounded-lg border ${errors.name ? "border-red-500" : "border-gray-700"
+                    } focus:outline-none focus:border-blue-500 transition-colors`}
                   placeholder="Your Name"
                 />
                 {errors.name && (
@@ -186,9 +211,8 @@ const ContactSection = () => {
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleChange("email", e.target.value)}
-                  className={`w-full px-4 py-3 bg-gray-800 text-white rounded-lg border ${
-                    errors.email ? "border-red-500" : "border-gray-700"
-                  } focus:outline-none focus:border-blue-500 transition-colors`}
+                  className={`w-full px-4 py-3 bg-gray-800 text-white rounded-lg border ${errors.email ? "border-red-500" : "border-gray-700"
+                    } focus:outline-none focus:border-blue-500 transition-colors`}
                   placeholder="your.email@example.com"
                 />
                 {errors.email && (
@@ -212,9 +236,8 @@ const ContactSection = () => {
                   value={formData.message}
                   onChange={(e) => handleChange("message", e.target.value)}
                   rows={5}
-                  className={`w-full px-4 py-3 bg-gray-800 text-white rounded-lg border ${
-                    errors.message ? "border-red-500" : "border-gray-700"
-                  } focus:outline-none focus:border-blue-500 transition-colors resize-none`}
+                  className={`w-full px-4 py-3 bg-gray-800 text-white rounded-lg border ${errors.message ? "border-red-500" : "border-gray-700"
+                    } focus:outline-none focus:border-blue-500 transition-colors resize-none`}
                   placeholder="Your message here..."
                 />
                 {errors.message && (
