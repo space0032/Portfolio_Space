@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 
 interface FormData {
   name: string;
@@ -66,13 +67,29 @@ const ContactSection = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Simulate API call (replace with actual EmailJS or API call)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+      const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+      const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
+      const templateParams = {
+        from_name: formData.name,
+        reply_to: formData.email,
+        message: formData.message,
+      };
+
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        templateParams,
+        PUBLIC_KEY
+      );
+
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
-    } catch {
+    } catch (error) {
+      console.error('EmailJS Error:', error);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
