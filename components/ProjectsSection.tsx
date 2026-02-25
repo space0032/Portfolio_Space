@@ -69,6 +69,24 @@ const projects: Project[] = [
     githubLink: "https://github.com/space0032/Tutudude_DataScience",
     image: "📊",
   },
+  {
+    id: 7,
+    title: "CivicBridge-AI",
+    description: "An AI-powered civic engagement platform that bridges the gap between citizens and local government. Features include issue reporting, community discussions, and AI-assisted problem resolution for civic matters.",
+    techStack: ["JavaScript", "AI/ML", "Node.js", "React"],
+    demoLink: "https://github.com/space0032/CivicBridge-AI",
+    githubLink: "https://github.com/space0032/CivicBridge-AI",
+    image: "🏛️",
+  },
+  {
+    id: 8,
+    title: "GrowFund",
+    description: "A gamified financial literacy app designed for Indian farmers to educate them about investments and wealth management. Uses farm-specific scenarios and engaging gameplay to teach financial planning and investment strategies.",
+    techStack: ["Java", "Android", "Financial Tech", "Gamification"],
+    demoLink: "https://github.com/space0032/GrowFund",
+    githubLink: "https://github.com/space0032/GrowFund",
+    image: "🌱",
+  },
 ];
 
 const ProjectsSection = () => {
