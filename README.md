@@ -2,7 +2,7 @@
 
 > A modern, animated portfolio website showcasing my projects, skills, and achievements.
 
-**Live Site:** [Your Live URL Here]
+**Live Site:** https://spaceishere.netlify.app/
 
 ---
 
@@ -135,14 +135,14 @@ This portfolio showcases several major projects including:
 Feel free to reach out through the contact form on the website or connect with me on:
 
 - **GitHub:** [github.com/space0032](https://github.com/space0032)
-- **LinkedIn:** [Your LinkedIn]
-- **Email:** [Your Email]
+- **LinkedIn:** https://www.linkedin.com/in/antariksh-mankar/
+- **Email:** antariksh.mankar43@gmail.com
 
 ---
 
 ## 📄 License
 
-© 2026 [Your Name]. All rights reserved.
+© 2026 Antariksh Mankar. All rights reserved.
 
 This portfolio is for personal use. Please do not copy or redistribute without permission.
 
