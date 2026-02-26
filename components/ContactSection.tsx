@@ -30,7 +30,7 @@ const ContactSection = () => {
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
   const validateEmail = (email: string): boolean => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(email);
   };
 
@@ -44,7 +44,7 @@ const ContactSection = () => {
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!validateEmail(formData.email)) {
-      newErrors.email = "Please enter a valid email";
+      newErrors.email = "Please enter a valid email address (e.g., name@example.com)";
     }
 
     if (!formData.message.trim()) {
