@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
@@ -9,9 +9,10 @@ interface Project {
   title: string;
   description: string;
   techStack: string[];
-  demoLink: string;
   githubLink: string;
-  image: string;
+  icon: string;
+  gradient: string;
+  featured?: boolean;
 }
 
 const projects: Project[] = [
@@ -20,183 +21,225 @@ const projects: Project[] = [
     title: "Smart Attendance System",
     description: "An intelligent attendance tracking system built with Java and Spring Boot. Features automated attendance management, real-time tracking, and comprehensive reporting capabilities.",
     techStack: ["Java", "Spring Boot", "MySQL", "REST API"],
-    demoLink: "https://github.com/space0032/smart_attandance_system",
     githubLink: "https://github.com/space0032/smart_attandance_system",
-    image: "📋",
+    icon: "📋",
+    gradient: "from-blue-600/20 to-cyan-600/20",
+    featured: true,
   },
   {
     id: 2,
-    title: "College Management System",
-    description: "A comprehensive college management platform with student enrollment, course management, and administrative features. Built with modern Java technologies.",
-    techStack: ["Java", "Spring Framework", "MySQL", "JPA"],
-    demoLink: "https://github.com/space0032/College-Management-2",
-    githubLink: "https://github.com/space0032/College-Management-2",
-    image: "🎓",
+    title: "CivicBridge-AI",
+    description: "An AI-powered civic engagement platform that bridges the gap between citizens and local government. Features include issue reporting, community discussions, and AI-assisted problem resolution.",
+    techStack: ["JavaScript", "AI/ML", "Node.js", "React"],
+    githubLink: "https://github.com/space0032/CivicBridge-AI",
+    icon: "🏛️",
+    gradient: "from-violet-600/20 to-purple-600/20",
+    featured: true,
   },
   {
     id: 3,
-    title: "Smart Clinic Management",
-    description: "Healthcare management system for clinics with patient records, appointment scheduling, and medical history tracking. Features a modern JavaScript-based interface.",
-    techStack: ["JavaScript", "Node.js", "React", "MongoDB"],
-    demoLink: "https://github.com/space0032/Smart-Clinic-Management-System",
-    githubLink: "https://github.com/space0032/Smart-Clinic-Management-System",
-    image: "🏥",
+    title: "College Management System",
+    description: "Comprehensive college management platform with student enrollment, course management, and administrative features.",
+    techStack: ["Java", "Spring Framework", "MySQL", "JPA"],
+    githubLink: "https://github.com/space0032/College-Management-2",
+    icon: "🎓",
+    gradient: "from-amber-600/20 to-orange-600/20",
   },
   {
     id: 4,
-    title: "Hackathon Voting System",
-    description: "Real-time voting platform for hackathons with secure authentication, live vote counting, and admin dashboard. Built with TypeScript and Next.js.",
-    techStack: ["TypeScript", "Next.js", "React", "TailwindCSS"],
-    demoLink: "https://github.com/space0032/Hackathon_Voting_System",
-    githubLink: "https://github.com/space0032/Hackathon_Voting_System",
-    image: "🗳️",
+    title: "Smart Clinic Management",
+    description: "Healthcare management system for clinics with patient records, appointment scheduling, and medical history tracking.",
+    techStack: ["JavaScript", "Node.js", "React", "MongoDB"],
+    githubLink: "https://github.com/space0032/Smart-Clinic-Management-System",
+    icon: "🏥",
+    gradient: "from-emerald-600/20 to-teal-600/20",
   },
   {
     id: 5,
-    title: "Java Validation Sanitizer",
-    description: "A robust Java library for input validation and sanitization. Helps prevent security vulnerabilities like SQL injection and XSS attacks.",
-    techStack: ["Java", "Security", "Validation", "Testing"],
-    demoLink: "https://github.com/space0032/java-validation-sanitizer",
-    githubLink: "https://github.com/space0032/java-validation-sanitizer",
-    image: "🔒",
+    title: "Hackathon Voting System",
+    description: "Real-time voting platform for hackathons with secure authentication, live vote counting, and admin dashboard.",
+    techStack: ["TypeScript", "Next.js", "React", "TailwindCSS"],
+    githubLink: "https://github.com/space0032/Hackathon_Voting_System",
+    icon: "🗳️",
+    gradient: "from-rose-600/20 to-pink-600/20",
   },
   {
     id: 6,
-    title: "Data Science Projects",
-    description: "Collection of data science projects and Jupyter notebooks covering machine learning, data analysis, and visualization techniques.",
-    techStack: ["Python", "Jupyter", "Pandas", "Machine Learning"],
-    demoLink: "https://github.com/space0032/Tutudude_DataScience",
-    githubLink: "https://github.com/space0032/Tutudude_DataScience",
-    image: "📊",
+    title: "Java Validation Sanitizer",
+    description: "A robust Java library for input validation and sanitization. Prevents SQL injection and XSS attacks.",
+    techStack: ["Java", "Security", "Validation", "Testing"],
+    githubLink: "https://github.com/space0032/java-validation-sanitizer",
+    icon: "🔒",
+    gradient: "from-cyan-600/20 to-blue-600/20",
   },
   {
     id: 7,
-    title: "CivicBridge-AI",
-    description: "An AI-powered civic engagement platform that bridges the gap between citizens and local government. Features include issue reporting, community discussions, and AI-assisted problem resolution for civic matters.",
-    techStack: ["JavaScript", "AI/ML", "Node.js", "React"],
-    demoLink: "https://github.com/space0032/CivicBridge-AI",
-    githubLink: "https://github.com/space0032/CivicBridge-AI",
-    image: "🏛️",
+    title: "Data Science Projects",
+    description: "Collection of data science projects covering machine learning, data analysis, and visualization techniques.",
+    techStack: ["Python", "Jupyter", "Pandas", "ML"],
+    githubLink: "https://github.com/space0032/Tutudude_DataScience",
+    icon: "📊",
+    gradient: "from-yellow-600/20 to-amber-600/20",
   },
   {
     id: 8,
     title: "GrowFund",
-    description: "A gamified financial literacy app designed for Indian farmers to educate them about investments and wealth management. Uses farm-specific scenarios and engaging gameplay to teach financial planning and investment strategies.",
-    techStack: ["Java", "Android", "Financial Tech", "Gamification"],
-    demoLink: "https://github.com/space0032/GrowFund",
+    description: "A gamified financial literacy app designed for Indian farmers to educate them about investments and wealth management.",
+    techStack: ["Java", "Android", "FinTech", "Gamification"],
     githubLink: "https://github.com/space0032/GrowFund",
-    image: "🌱",
+    icon: "🌱",
+    gradient: "from-green-600/20 to-emerald-600/20",
   },
 ];
+
+const filterOptions = ["All", "Java", "JavaScript", "TypeScript", "Python"];
 
 const ProjectsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeFilter, setActiveFilter] = useState("All");
   const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [flippedId, setFlippedId] = useState<number | null>(null);
 
-  const scrollToSection = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  };
+  const filteredProjects =
+    activeFilter === "All"
+      ? projects
+      : projects.filter((p) =>
+          p.techStack.some((t) =>
+            t.toLowerCase().includes(activeFilter.toLowerCase())
+          )
+        );
 
   return (
     <section
       ref={ref}
-      className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black px-4 py-20"
+      className="relative min-h-screen flex items-center justify-center px-4 py-24 overflow-hidden"
       id="projects"
+      style={{ background: "linear-gradient(180deg, #0a0f1e 0%, #0e1528 50%, #0a0f1e 100%)" }}
     >
-      <div className="max-w-7xl w-full">
-        <motion.h2
-          className="text-4xl md:text-6xl font-bold text-center mb-12"
+      <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
+
+      <div className="max-w-7xl w-full relative z-10">
+        {/* Heading */}
+        <motion.div
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          My <span className="text-purple-500">Projects</span>
-        </motion.h2>
+          <span className="text-accent-violet font-mono text-sm tracking-wider uppercase block mb-3">
+            &lt;projects /&gt;
+          </span>
+          <h2 className="text-4xl md:text-6xl font-bold">
+            Featured{" "}
+            <span className="bg-gradient-to-r from-accent-violet to-accent-rose bg-clip-text text-transparent">
+              Projects
+            </span>
+          </h2>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              className="relative h-80 cursor-pointer"
-              style={{ perspective: "1000px" }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              onHoverStart={() => setHoveredId(project.id)}
-              onHoverEnd={() => setHoveredId(null)}
-              onClick={() => setFlippedId(flippedId === project.id ? null : project.id)}
+        {/* Filter buttons */}
+        <motion.div
+          className="flex justify-center gap-2 mb-12 flex-wrap"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          {filterOptions.map((filter) => (
+            <motion.button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
+                activeFilter === filter
+                  ? "bg-accent-violet/15 text-accent-violet border border-accent-violet/30"
+                  : "text-text-muted border border-white/5 hover:border-white/15 hover:text-text-secondary"
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
+              {filter}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* Bento Grid */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
               <motion.div
-                className="relative w-full h-full"
-                animate={{
-                  rotateY: flippedId === project.id ? 180 : 0,
-                }}
-                transition={{ duration: 0.6 }}
-                style={{ transformStyle: "preserve-3d" }}
+                key={project.id}
+                layout
+                className={`${
+                  project.featured ? "md:col-span-2 lg:col-span-1 lg:row-span-1" : ""
+                }`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                onHoverStart={() => setHoveredId(project.id)}
+                onHoverEnd={() => setHoveredId(null)}
               >
-                {/* Front of card */}
-                <div
-                  className="absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 overflow-hidden"
-                  style={{ backfaceVisibility: "hidden" }}
-                >
-                  <div className="p-8 h-full flex flex-col items-center justify-center relative">
-                    <motion.div
-                      className="text-8xl mb-4"
-                      animate={{
-                        scale: hoveredId === project.id ? 1.2 : 1,
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {project.image}
-                    </motion.div>
-                    <h3 className="text-2xl font-bold text-white mb-2 text-center">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-400 text-center text-sm">
-                      Click to see details
-                    </p>
-
-                    {/* Hover glow effect */}
-                    {hoveredId === project.id && (
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                      />
-                    )}
-                  </div>
-                </div>
-
-                {/* Back of card */}
-                <div
-                  className="absolute w-full h-full backface-hidden rounded-2xl bg-gradient-to-br from-blue-900 to-purple-900 border border-blue-500 p-6 overflow-y-auto"
+                <motion.div
+                  className="relative glass-card rounded-2xl overflow-hidden h-full group"
+                  whileHover={{ y: -8 }}
+                  transition={{ duration: 0.3 }}
                   style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
+                    transformStyle: "preserve-3d",
                   }}
                 >
-                  <h3 className="text-2xl font-bold text-white mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 mb-4 text-sm">
-                    {project.description}
-                  </p>
+                  {/* Gradient background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-50 group-hover:opacity-80 transition-opacity`} />
 
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-blue-300 mb-2">
-                      Tech Stack:
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
+                  {/* Content */}
+                  <div className="relative p-6 flex flex-col h-full min-h-[280px]">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-4">
+                      <motion.span
+                        className="text-4xl"
+                        animate={{
+                          scale: hoveredId === project.id ? 1.2 : 1,
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {project.icon}
+                      </motion.span>
+
+                      {/* GitHub link */}
+                      <motion.a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-9 h-9 rounded-full flex items-center justify-center text-text-muted hover:text-accent-cyan transition-colors bg-white/5 hover:bg-white/10"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label={`View ${project.title} on GitHub`}
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                      </motion.a>
+                    </div>
+
+                    {project.featured && (
+                      <span className="inline-flex w-fit items-center gap-1 px-2 py-0.5 rounded-full bg-accent-violet/10 text-accent-violet text-xs font-mono border border-accent-violet/20 mb-3">
+                        ★ Featured
+                      </span>
+                    )}
+
+                    {/* Title & Description */}
+                    <h3 className="text-xl font-bold text-text-primary mb-2 group-hover:text-accent-cyan transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-text-secondary text-sm leading-relaxed mb-auto line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    {/* Tech stack pills */}
+                    <div className="flex flex-wrap gap-2 mt-5 pt-4 border-t border-white/5">
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-blue-500/30 text-blue-200 rounded-full text-xs"
+                          className="px-3 py-1 rounded-full bg-white/5 text-text-muted text-xs border border-white/5"
                         >
                           {tech}
                         </span>
@@ -204,30 +247,54 @@ const ProjectsSection = () => {
                     </div>
                   </div>
 
-                  <a
-                    href={project.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 bg-white text-purple-900 rounded-lg font-semibold hover:bg-gray-200 transition-colors mt-auto"
-                    onClick={(e) => e.stopPropagation()}
+                  {/* Hover overlay — slides up from bottom */}
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-bg-primary via-bg-primary/95 to-transparent p-6 flex items-end justify-center"
+                    initial={{ y: "100%", opacity: 0 }}
+                    animate={hoveredId === project.id ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    View on GitHub →
-                  </a>
-                </div>
+                    <motion.a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-accent-violet to-accent-cyan text-bg-primary font-semibold text-sm hover:shadow-lg hover:shadow-accent-violet/25 transition-shadow"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View on GitHub
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </motion.a>
+                  </motion.div>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
-        {/* Add a "Contact Me" button */}
-        <div className="text-center mt-12">
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all"
+        {/* CTA */}
+        <motion.div
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.8 }}
+        >
+          <motion.a
+            href="https://github.com/space0032"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-cyan transition-colors font-mono text-sm"
+            whileHover={{ x: 5 }}
           >
-            Contact Me
-          </button>
-        </div>
+            View all projects on GitHub
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );
