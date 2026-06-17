@@ -308,7 +308,7 @@ const ContactSection = () => {
                     onChange={(e) => handleChange("name", e.target.value)}
                     onFocus={() => setFocusedField("name")}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-3.5 bg-white/3 text-text-primary rounded-xl border ${
+                    className={`w-full px-4 py-3.5 bg-white text-black rounded-xl border ${
                       errors.name
                         ? "border-accent-rose/50 focus:border-accent-rose"
                         : "border-white/10 focus:border-accent-cyan/50"
@@ -344,7 +344,7 @@ const ContactSection = () => {
                     onChange={(e) => handleChange("email", e.target.value)}
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-3.5 bg-white/3 text-text-primary rounded-xl border ${
+                    className={`w-full px-4 py-3.5 bg-white text-black rounded-xl border ${
                       errors.email
                         ? "border-accent-rose/50 focus:border-accent-rose"
                         : "border-white/10 focus:border-accent-cyan/50"
@@ -380,7 +380,7 @@ const ContactSection = () => {
                     onFocus={() => setFocusedField("message")}
                     onBlur={() => setFocusedField(null)}
                     rows={5}
-                    className={`w-full px-4 py-3.5 bg-white/3 text-text-primary rounded-xl border ${
+                    className={`w-full px-4 py-3.5 bg-white text-black rounded-xl border ${
                       errors.message
                         ? "border-accent-rose/50 focus:border-accent-rose"
                         : "border-white/10 focus:border-accent-cyan/50"
