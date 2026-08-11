@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
+import HudStatus from "@/components/hud/HudStatus";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -22,6 +23,7 @@ export default function Home() {
     <>
       <MouseGlow />
       <Navbar />
+      <HudStatus />
       <SpaceScene>
         <main className="relative">
           <HeroSection />

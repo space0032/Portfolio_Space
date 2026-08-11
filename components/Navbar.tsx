@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useMotionValueEvent, useTransform, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { activeSection, scrollProgress, SECTORS } from "@/lib/dom";
+import { useEffect, useRef, useState } from "react";
+import { activeSection, scrollProgress, SECTORS, scrollControlsStore } from "@/lib/dom";
 
 const navLinks = [
   { id: "home", code: "IDENT", index: 0 },
@@ -20,14 +20,40 @@ const Navbar = () => {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const progressWidth = useTransform(scrollProgress, (v) => `${Math.round(v * 100)}%`);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const firstItemRef = useRef<HTMLButtonElement>(null);
 
   useMotionValueEvent(activeSection, "change", (v) => setActiveIdx(v));
 
   const activeMeta = SECTORS[Math.min(Math.max(activeIdx, 0), SECTORS.length - 1)];
 
+  const closeMenu = () => {
+    setIsMobileOpen(false);
+    menuButtonRef.current?.focus();
+  };
+
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const el = scrollControlsStore.el ?? document.documentElement;
+    const prevOverflow = el.style.overflow;
+    el.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    firstItemRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMenu();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      el.style.overflow = prevOverflow;
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobileOpen]);
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setIsMobileOpen(false);
+    closeMenu();
   };
 
   return (
@@ -127,11 +153,13 @@ const Navbar = () => {
 
               {/* Hamburger */}
               <motion.button
+                ref={menuButtonRef}
                 className="flex flex-col gap-1.5 p-2 lg:hidden"
                 onClick={() => setIsMobileOpen((o) => !o)}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Toggle menu"
                 aria-expanded={isMobileOpen}
+                aria-controls="mobile-menu"
               >
                 <motion.span
                   className="block h-0.5 w-6 bg-text-primary"
@@ -155,6 +183,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
+            id="mobile-menu"
             className="fixed inset-0 z-40 lg:hidden"
             initial="closed"
             animate="open"
@@ -164,7 +193,7 @@ const Navbar = () => {
             <motion.div
               className="absolute inset-0 bg-bg-primary/95 backdrop-blur-md"
               variants={{ open: { opacity: 1 }, closed: { opacity: 0 } }}
-              onClick={() => setIsMobileOpen(false)}
+              onClick={closeMenu}
             />
             <motion.div
               className="hud-grid absolute inset-0 opacity-50"
@@ -182,6 +211,7 @@ const Navbar = () => {
                 return (
                   <motion.button
                     key={link.id}
+                    ref={i === 0 ? firstItemRef : undefined}
                     onClick={() => scrollTo(link.id)}
                     className="group flex cursor-pointer items-baseline gap-4 py-2"
                     initial={{ opacity: 0, x: -30 }}

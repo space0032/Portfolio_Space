@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState, FormEvent, ReactNode } from "react";
 import emailjs from "@emailjs/browser";
 import SectionShell from "@/components/hud/SectionShell";
@@ -68,7 +67,7 @@ const ContactSection = () => {
   const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | "config" | null>(null);
 
   const validateEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -87,13 +86,18 @@ const ContactSection = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
+    const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setSubmitStatus("config");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-      const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
-      const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
       const templateParams = {
         from_name: formData.name,
         reply_to: formData.email,
@@ -116,9 +120,14 @@ const ContactSection = () => {
     if (errors[field]) setErrors({ ...errors, [field]: undefined });
   };
 
-  const errorMsg = (msg?: string) =>
+  const errorMsg = (id: string, msg?: string) =>
     msg ? (
-      <motion.p className="mt-1.5 ml-1 font-mono text-xs text-accent-rose" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.p
+        id={id}
+        className="mt-1.5 ml-1 font-mono text-xs text-accent-rose"
+        initial={{ opacity: 0, y: -5 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         ! {msg}
       </motion.p>
     ) : null;
@@ -225,9 +234,12 @@ const ContactSection = () => {
                   value={formData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
                   placeholder="your_name"
+                  required
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? "contact-name-error" : undefined}
                   className={`hud-input px-4 py-3 text-sm ${errors.name ? "!border-accent-rose/60" : ""}`}
                 />
-                {errorMsg(errors.name)}
+                {errorMsg("contact-name-error", errors.name)}
               </div>
 
               <div>
@@ -240,9 +252,12 @@ const ContactSection = () => {
                   value={formData.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                   placeholder="you@station.com"
+                  required
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "contact-email-error" : undefined}
                   className={`hud-input px-4 py-3 text-sm ${errors.email ? "!border-accent-rose/60" : ""}`}
                 />
-                {errorMsg(errors.email)}
+                {errorMsg("contact-email-error", errors.email)}
               </div>
 
               <div>
@@ -255,9 +270,12 @@ const ContactSection = () => {
                   onChange={(e) => handleChange("message", e.target.value)}
                   rows={5}
                   placeholder="// encrypt your message here..."
+                  required
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? "contact-message-error" : undefined}
                   className={`hud-input resize-none px-4 py-3 text-sm ${errors.message ? "!border-accent-rose/60" : ""}`}
                 />
-                {errorMsg(errors.message)}
+                {errorMsg("contact-message-error", errors.message)}
               </div>
 
               <motion.button
@@ -288,6 +306,7 @@ const ContactSection = () => {
 
               {submitStatus === "success" && (
                 <motion.div
+                  role="status"
                   className="flex items-center gap-2 border border-accent-emerald/30 bg-accent-emerald/10 p-4 font-mono text-sm text-accent-emerald"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -297,11 +316,22 @@ const ContactSection = () => {
               )}
               {submitStatus === "error" && (
                 <motion.div
+                  role="alert"
                   className="flex items-center gap-2 border border-accent-rose/30 bg-accent-rose/10 p-4 font-mono text-sm text-accent-rose"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
                   Signal lost — please try again.
+                </motion.div>
+              )}
+              {submitStatus === "config" && (
+                <motion.div
+                  role="alert"
+                  className="flex items-center gap-2 border border-accent-amber/30 bg-accent-amber/10 p-4 font-mono text-sm text-accent-amber"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  Uplink not configured — set NEXT_PUBLIC_EMAILJS_* or email me directly.
                 </motion.div>
               )}
             </form>

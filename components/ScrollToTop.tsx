@@ -45,7 +45,7 @@ const ScrollToTop = () => {
   return (
     <motion.button
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full glass-card flex items-center justify-center cursor-pointer group"
+      className="group fixed bottom-8 right-8 z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full hud-panel"
       initial={{ opacity: 0, scale: 0 }}
       animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
       transition={{ duration: 0.3 }}
@@ -53,9 +53,12 @@ const ScrollToTop = () => {
       whileTap={{ scale: 0.9 }}
       aria-label="Scroll to top"
     >
+      <span className="hud-label absolute -top-7 whitespace-nowrap text-text-muted/60 opacity-0 transition-opacity group-hover:opacity-100">
+        top
+      </span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="w-5 h-5 text-accent-cyan group-hover:animate-bounce-gentle"
+        className="h-5 w-5 text-accent-cyan group-hover:animate-bounce-gentle"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

@@ -2,7 +2,7 @@
 
 import { useFrame } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { sampleScene, sceneState, sectorIndexAt } from "@/lib/three";
 import { scrollProgress, activeSection } from "@/lib/dom";
@@ -13,6 +13,13 @@ export default function ScrollRig() {
   const scroll = useScroll();
   const pos = useMemo(() => new THREE.Vector3(0, 0, 12), []);
   const look = useMemo(() => new THREE.Vector3(), []);
+  const prefersReducedMotion = useMemo(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    []
+  );
+  const lastAccent = useRef("");
 
   useEffect(() => {
     sampleScene(0);
@@ -24,8 +31,17 @@ export default function ScrollRig() {
     activeSection.set(sectorIndexAt(scroll.offset));
 
     if (typeof document !== "undefined") {
-      const el = document.documentElement;
-      el.style.setProperty("--section-accent", sceneState.color.getStyle());
+      const accent = sceneState.color.getStyle();
+      if (accent !== lastAccent.current) {
+        document.documentElement.style.setProperty("--section-accent", accent);
+        lastAccent.current = accent;
+      }
+    }
+
+    if (prefersReducedMotion) {
+      state.camera.position.copy(sceneState.cameraTarget);
+      state.camera.lookAt(sceneState.lookAtTarget);
+      return;
     }
 
     const alpha = 1 - Math.exp(-CAMERA_LAMBDA * delta);
