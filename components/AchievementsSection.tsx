@@ -113,9 +113,15 @@ const AchievementsSection = () => {
       ref={ref}
       className="relative min-h-screen flex items-center justify-center px-4 py-24 overflow-hidden"
       id="achievements"
-      style={{ background: "linear-gradient(180deg, #0a0f1e 0%, #10162a 50%, #0a0f1e 100%)" }}
     >
-      <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
+      {/* Readability veil over the 3D scene */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(10,15,30,0.6) 0%, rgba(10,15,30,0.2) 55%, transparent 80%)",
+        }}
+      />
 
       <div className="max-w-6xl w-full relative z-10">
         {/* Heading */}

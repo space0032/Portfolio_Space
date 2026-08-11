@@ -1,0 +1,82 @@
+"use client";
+
+import { Canvas } from "@react-three/fiber";
+import { ScrollControls, Scroll } from "@react-three/drei";
+import { Suspense, ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import ScrollRig from "./ScrollRig";
+import ScrollBridge from "./ScrollBridge";
+import Starfield from "./Starfield";
+import NebulaSprites from "./NebulaSprites";
+import TechOrbs from "./TechOrbs";
+import CentralObject from "./CentralObject";
+
+const DEFAULT_PAGES = 9;
+
+export default function SpaceScene({ children }: { children: ReactNode }) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [pages, setPages] = useState(DEFAULT_PAGES);
+
+  const measure = useCallback(() => {
+    if (!contentRef.current || typeof window === "undefined") return;
+    const next = Math.max(3, Math.ceil(contentRef.current.scrollHeight / window.innerHeight));
+    setPages((prev) => (prev === next ? prev : next));
+  }, []);
+
+  useEffect(() => {
+    measure();
+    let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+    const onResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(measure, 200);
+    };
+    window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onResize);
+    return () => {
+      clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+    };
+  }, [measure]);
+
+  return (
+    <div className="fixed inset-0 z-0">
+      <Canvas
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 0, 12], fov: 55 }}
+        gl={{ antialias: true, alpha: true }}
+      >
+        <color attach="background" args={["#0a0f1e"]} />
+        <fog attach="fog" args={["#0a0f1e", 18, 46]} />
+        <hemisphereLight args={["#3a6bff", "#0a0f1e", 0.6]} />
+        <ambientLight intensity={0.35} />
+        <pointLight position={[12, 10, 10]} intensity={180} color="#00f0ff" />
+        <pointLight position={[-12, -8, 6]} intensity={180} color="#8b5cf6" />
+
+        <Suspense fallback={null}>
+          <ScrollControls pages={pages} distance={1} damping={0.25}>
+            <ScrollBridge />
+            <ScrollRig />
+            <Starfield />
+            <NebulaSprites />
+            <TechOrbs />
+            <CentralObject />
+            <Scroll html style={{ width: "100%" }}>
+              <div ref={contentRef} className="relative z-10 w-full">
+                {children}
+              </div>
+            </Scroll>
+          </ScrollControls>
+        </Suspense>
+      </Canvas>
+
+      {/* Readability vignette over the 3D scene */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 45%, rgba(6,9,20,0.6) 100%)",
+        }}
+      />
+    </div>
+  );
+}

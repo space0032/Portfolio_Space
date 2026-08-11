@@ -141,8 +141,16 @@ const ContactSection = () => {
       ref={ref}
       className="relative min-h-screen flex items-center justify-center px-4 py-24 overflow-hidden"
       id="contact"
-      style={{ background: "linear-gradient(180deg, #0a0f1e 0%, #0d1326 50%, #0a0f1e 100%)" }}
     >
+      {/* Readability veil over the 3D scene */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(10,15,30,0.6) 0%, rgba(10,15,30,0.2) 55%, transparent 80%)",
+        }}
+      />
+
       {/* Background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -166,8 +174,6 @@ const ContactSection = () => {
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
         />
       </div>
-
-      <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
 
       <div className="max-w-5xl w-full relative z-10">
         {/* Heading */}

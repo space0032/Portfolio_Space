@@ -1,18 +1,45 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { scrollControlsStore } from "@/lib/three";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsVisible(latest > 500);
-  });
+  useEffect(() => {
+    let el: HTMLElement | null = null;
+    let raf = 0;
+
+    const onScroll = () => {
+      if (el) setIsVisible(el.scrollTop > 500);
+    };
+
+    const tick = () => {
+      if (scrollControlsStore.el) {
+        el = scrollControlsStore.el;
+        el.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      } else {
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      el?.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const el = scrollControlsStore.el;
+    if (el) {
+      el.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (

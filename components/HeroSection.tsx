@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const roles = [
   "Backend Developer",
@@ -70,11 +70,6 @@ const HeroSection = () => {
   const [terminalLineIndex, setTerminalLineIndex] = useState(0);
   const [showTerminal, setShowTerminal] = useState(false);
   const [startStats, setStartStats] = useState(false);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const gridX = useTransform(mouseX, [0, typeof window !== "undefined" ? window.innerWidth : 1920], [-15, 15]);
-  const gridY = useTransform(mouseY, [0, typeof window !== "undefined" ? window.innerHeight : 1080], [-15, 15]);
 
   // Typewriter effect for roles
   useEffect(() => {
@@ -117,24 +112,19 @@ const HeroSection = () => {
     }
   }, [terminalLineIndex, showTerminal]);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    mouseX.set(e.clientX);
-    mouseY.set(e.clientY);
-  }, [mouseX, mouseY]);
-
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-bg grid-pattern"
-      onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Animated grid background */}
-      <motion.div
+      {/* Readability veil over the 3D scene */}
+      <div
         className="absolute inset-0 pointer-events-none"
-        style={{ x: gridX, y: gridY }}
-      >
-        <div className="absolute inset-0 grid-pattern opacity-50" />
-      </motion.div>
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(10,15,30,0.55) 0%, rgba(10,15,30,0.15) 55%, transparent 80%)",
+        }}
+      />
 
       {/* Floating code snippets in background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

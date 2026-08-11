@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const navLinks = [
@@ -16,28 +16,29 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 50);
-  });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navLinks.map((link) => link.href.replace("#", ""));
-      const scrollPosition = window.scrollY + 100;
+    const sectionIds = navLinks.map((link) => link.href.replace("#", ""));
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            setActiveSection(id);
+            setIsScrolled(id !== "home");
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const scrollToSection = (href: string) => {
