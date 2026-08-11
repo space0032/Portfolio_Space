@@ -1,213 +1,208 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useMotionValueEvent, useTransform, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { activeSection, scrollProgress, SECTORS } from "@/lib/dom";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Experience", href: "#achievements" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
+  { id: "home", code: "IDENT", index: 0 },
+  { id: "about", code: "PROFILE", index: 1 },
+  { id: "skills", code: "SYSTEMS", index: 2 },
+  { id: "achievements", code: "LOG", index: 3 },
+  { id: "projects", code: "ARCHIVE", index: 4 },
+  { id: "contact", code: "TRANSMISSION", index: 5 },
 ];
 
+const RESUME_URL =
+  "https://drive.google.com/file/d/1acZLfDyLRgRAAsdpoavzDRzYTYn6vq30/view?usp=sharing";
+
 const Navbar = () => {
-  const [activeSection, setActiveSection] = useState("home");
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const progressWidth = useTransform(scrollProgress, (v) => `${Math.round(v * 100)}%`);
 
-  useEffect(() => {
-    const sectionIds = navLinks.map((link) => link.href.replace("#", ""));
+  useMotionValueEvent(activeSection, "change", (v) => setActiveIdx(v));
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            setActiveSection(id);
-            setIsScrolled(id !== "home");
-          }
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
-    );
+  const activeMeta = SECTORS[Math.min(Math.max(activeIdx, 0), SECTORS.length - 1)];
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const scrollToSection = (href: string) => {
-    const id = href.replace("#", "");
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setIsMobileOpen(false);
   };
 
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? "glass py-3"
-            : "bg-transparent py-5"
-        }`}
+        className="fixed left-0 right-0 top-0 z-50"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo */}
-          <motion.button
-            onClick={() => scrollToSection("#home")}
-            className="flex items-center gap-2 group cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="text-accent-cyan font-mono text-lg opacity-60 group-hover:opacity-100 transition-opacity">
-              &lt;
-            </span>
-            <span className="text-xl font-bold text-text-primary">
-              Antariksh
-            </span>
-            <span className="text-accent-cyan font-mono text-lg opacity-60 group-hover:opacity-100 transition-opacity">
-              /&gt;
-            </span>
-          </motion.button>
+        {/* Scroll progress hairline */}
+        <motion.div
+          className="h-0.5 origin-left"
+          style={{
+            width: progressWidth,
+            background: "linear-gradient(90deg, var(--accent-cyan), var(--accent-violet))",
+          }}
+        />
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <motion.button
-                key={link.name}
-                onClick={() => scrollToSection(link.href)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg cursor-pointer ${
-                  activeSection === link.href.replace("#", "")
-                    ? "text-accent-cyan"
-                    : "text-text-secondary hover:text-text-primary"
-                }`}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
+        <div
+          className={`transition-all duration-500 ${
+            activeIdx > 0 ? "border-b border-white/5 bg-bg-primary/70 backdrop-blur-md" : ""
+          }`}
+        >
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+            {/* Brand */}
+            <button
+              onClick={() => scrollTo("home")}
+              className="group flex cursor-pointer items-center gap-2"
+            >
+              <span className="hud-label opacity-60 transition-opacity group-hover:opacity-100" style={{ color: activeMeta.color }}>
+                &lt;
+              </span>
+              <span className="font-mono text-lg font-bold tracking-wide text-text-primary transition-colors group-hover:text-accent-cyan">
+                Antariksh
+              </span>
+              <span className="hud-label opacity-60 transition-opacity group-hover:opacity-100" style={{ color: activeMeta.color }}>
+                /&gt;
+              </span>
+            </button>
+
+            {/* Desktop sector links */}
+            <div className="hidden items-center gap-1 lg:flex">
+              {navLinks.map((link) => {
+                const active = activeIdx === link.index;
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => scrollTo(link.id)}
+                    className="group relative cursor-pointer px-3 py-2"
+                  >
+                    <span
+                      className={`hud-label transition-colors ${
+                        active ? "" : "text-text-muted group-hover:text-text-primary"
+                      }`}
+                      style={active ? { color: activeMeta.color } : undefined}
+                    >
+                      <span className="opacity-50">{String(link.index + 1).padStart(2, "0")}</span>{" "}
+                      {link.code}
+                    </span>
+                    {active && (
+                      <motion.span
+                        layoutId="navActive"
+                        className="absolute -bottom-0.5 left-2 right-2 h-px"
+                        style={{
+                          backgroundColor: activeMeta.color,
+                          boxShadow: `0 0 8px ${activeMeta.color}`,
+                        }}
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right cluster */}
+            <div className="flex items-center gap-4">
+              <div className="hidden items-center gap-2 xl:flex">
+                <span className="status-dot" style={{ color: activeMeta.color }} />
+                <span className="hud-label text-text-muted">Sys.Online</span>
+              </div>
+
+              <motion.a
+                href={RESUME_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden items-center gap-2 border border-accent-cyan/30 px-4 py-2 font-mono text-xs tracking-widest text-accent-cyan transition-all hover:bg-accent-cyan/10 sm:flex"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
               >
-                {link.name}
-                {activeSection === link.href.replace("#", "") && (
-                  <motion.div
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-accent-cyan rounded-full"
-                    layoutId="activeSection"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Resume
+              </motion.a>
+
+              {/* Hamburger */}
+              <motion.button
+                className="flex flex-col gap-1.5 p-2 lg:hidden"
+                onClick={() => setIsMobileOpen((o) => !o)}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Toggle menu"
+                aria-expanded={isMobileOpen}
+              >
+                <motion.span
+                  className="block h-0.5 w-6 bg-text-primary"
+                  animate={isMobileOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                />
+                <motion.span
+                  className="block h-0.5 w-6 bg-text-primary"
+                  animate={isMobileOpen ? { opacity: 0 } : { opacity: 1 }}
+                />
+                <motion.span
+                  className="block h-0.5 w-6 bg-text-primary"
+                  animate={isMobileOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                />
               </motion.button>
-            ))}
-          </div>
-
-          {/* Resume Button + Mobile Hamburger */}
-          <div className="flex items-center gap-4">
-            <motion.a
-              href="https://drive.google.com/file/d/1acZLfDyLRgRAAsdpoavzDRzYTYn6vq30/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-2 px-5 py-2 rounded-full border border-accent-cyan/30 text-accent-cyan text-sm font-medium hover:bg-accent-cyan/10 transition-all cursor-pointer"
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0, 240, 255, 0.2)" }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Resume
-            </motion.a>
-
-            {/* Mobile hamburger */}
-            <motion.button
-              className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              whileTap={{ scale: 0.9 }}
-            >
-              <motion.span
-                className="w-6 h-0.5 bg-text-primary block"
-                animate={isMobileOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-              />
-              <motion.span
-                className="w-6 h-0.5 bg-text-primary block"
-                animate={isMobileOpen ? { opacity: 0 } : { opacity: 1 }}
-              />
-              <motion.span
-                className="w-6 h-0.5 bg-text-primary block"
-                animate={isMobileOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-              />
-            </motion.button>
+            </div>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile menu drawer */}
-      <motion.div
-        className="fixed inset-0 z-40 md:hidden"
-        initial={false}
-        animate={isMobileOpen ? "open" : "closed"}
-        variants={{
-          open: { visibility: "visible" as const },
-          closed: { visibility: "hidden" as const, transition: { delay: 0.3 } },
-        }}
-      >
-        {/* Backdrop */}
-        <motion.div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          variants={{
-            open: { opacity: 1 },
-            closed: { opacity: 0 },
-          }}
-          onClick={() => setIsMobileOpen(false)}
-        />
-
-        {/* Menu */}
-        <motion.div
-          className="absolute right-0 top-0 h-full w-64 glass-card bg-bg-primary/95 p-8 pt-24 flex flex-col gap-2"
-          variants={{
-            open: { x: 0 },
-            closed: { x: "100%" },
-          }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        >
-          {navLinks.map((link, index) => (
-            <motion.button
-              key={link.name}
-              onClick={() => scrollToSection(link.href)}
-              className={`text-left px-4 py-3 rounded-lg text-lg font-medium transition-colors cursor-pointer ${
-                activeSection === link.href.replace("#", "")
-                  ? "text-accent-cyan bg-accent-cyan/10"
-                  : "text-text-secondary hover:text-text-primary hover:bg-white/5"
-              }`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={isMobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-              transition={{ delay: index * 0.05 + 0.1 }}
-            >
-              {link.name}
-            </motion.button>
-          ))}
-
-          <motion.a
-            href="https://drive.google.com/file/d/1acZLfDyLRgRAAsdpoavzDRzYTYn6vq30/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-accent-cyan/30 text-accent-cyan font-medium hover:bg-accent-cyan/10 transition-all"
-            initial={{ opacity: 0, x: 20 }}
-            animate={isMobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-            transition={{ delay: 0.4 }}
+      {/* Mobile full-screen overlay menu */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 lg:hidden"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={{ open: { visibility: "visible" }, closed: { visibility: "hidden" } }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Resume
-          </motion.a>
-        </motion.div>
-      </motion.div>
+            <motion.div
+              className="absolute inset-0 bg-bg-primary/95 backdrop-blur-md"
+              variants={{ open: { opacity: 1 }, closed: { opacity: 0 } }}
+              onClick={() => setIsMobileOpen(false)}
+            />
+            <motion.div
+              className="hud-grid absolute inset-0 opacity-50"
+              variants={{ open: { opacity: 1 }, closed: { opacity: 0 } }}
+            />
+            <motion.div
+              className="absolute inset-0 flex flex-col items-start justify-center gap-2 px-8"
+              initial="closed"
+              animate="open"
+              exit="closed"
+            >
+              {navLinks.map((link, i) => {
+                const active = activeIdx === link.index;
+                const meta = SECTORS[link.index];
+                return (
+                  <motion.button
+                    key={link.id}
+                    onClick={() => scrollTo(link.id)}
+                    className="group flex cursor-pointer items-baseline gap-4 py-2"
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ delay: 0.06 * i + 0.1 }}
+                  >
+                    <span className="hud-label text-text-muted">{String(link.index + 1).padStart(2, "0")}</span>
+                    <span
+                      className="text-3xl font-bold tracking-widest transition-colors"
+                      style={{ color: active ? meta.color : "var(--text-secondary)" }}
+                    >
+                      {link.code}
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

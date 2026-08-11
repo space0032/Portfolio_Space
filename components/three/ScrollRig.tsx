@@ -4,7 +4,8 @@ import { useFrame } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 import * as THREE from "three";
-import { sampleScene, sceneState } from "@/lib/three";
+import { sampleScene, sceneState, sectorIndexAt } from "@/lib/three";
+import { scrollProgress, activeSection } from "@/lib/dom";
 
 const CAMERA_LAMBDA = 4;
 
@@ -19,6 +20,13 @@ export default function ScrollRig() {
 
   useFrame((state, delta) => {
     sampleScene(scroll.offset);
+    scrollProgress.set(scroll.offset);
+    activeSection.set(sectorIndexAt(scroll.offset));
+
+    if (typeof document !== "undefined") {
+      const el = document.documentElement;
+      el.style.setProperty("--section-accent", sceneState.color.getStyle());
+    }
 
     const alpha = 1 - Math.exp(-CAMERA_LAMBDA * delta);
     pos.lerp(sceneState.cameraTarget, alpha);

@@ -9,6 +9,13 @@ import Starfield from "./Starfield";
 import NebulaSprites from "./NebulaSprites";
 import TechOrbs from "./TechOrbs";
 import CentralObject from "./CentralObject";
+import {
+  ProfileObject,
+  SystemCore,
+  FlightPath,
+  ProjectOrbits,
+  SignalBeacon,
+} from "./SectionObjects";
 
 const DEFAULT_PAGES = 9;
 
@@ -58,8 +65,13 @@ export default function SpaceScene({ children }: { children: ReactNode }) {
             <ScrollRig />
             <Starfield />
             <NebulaSprites />
-            <TechOrbs />
             <CentralObject />
+            <ProfileObject />
+            <SystemCore />
+            <TechOrbs />
+            <FlightPath />
+            <ProjectOrbits />
+            <SignalBeacon />
             <Scroll html style={{ width: "100%" }}>
               <div ref={contentRef} className="relative z-10 w-full">
                 {children}

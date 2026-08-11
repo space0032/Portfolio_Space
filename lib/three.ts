@@ -99,5 +99,11 @@ export function sampleScene(t: number): void {
   sceneState.starSpeed = w.starSpeed;
 }
 
-/** Holds the scroll container element created by drei ScrollControls. */
-export const scrollControlsStore: { el: HTMLElement | null } = { el: null };
+/** Map a normalized scroll offset to the closest sector index (0..5). */
+export function sectorIndexAt(t: number): number {
+  let idx = 0;
+  for (let i = 0; i < WAYPOINTS.length; i++) {
+    if (t >= WAYPOINTS[i].at) idx = i;
+  }
+  return idx;
+}

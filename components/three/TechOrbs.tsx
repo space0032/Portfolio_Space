@@ -1,10 +1,12 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
+import { useScroll } from "@react-three/drei";
 import { Instances, Instance } from "@react-three/drei";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { TECHS, sceneState } from "@/lib/three";
+import { sceneEvents } from "@/lib/dom";
 
 interface Orbit {
   radius: number;
@@ -15,6 +17,10 @@ interface Orbit {
 }
 
 export default function TechOrbs() {
+  const scroll = useScroll();
+  const highlight = useRef<string | null>(null);
+  const refs = useRef<Array<THREE.Object3D | null>>([]);
+
   const orbits = useMemo<Orbit[]>(
     () =>
       TECHS.map((_, i) => {
@@ -29,7 +35,19 @@ export default function TechOrbs() {
       }),
     []
   );
-  const refs = useRef<Array<THREE.Object3D | null>>([]);
+
+  useEffect(() => {
+    const offHl = sceneEvents.on("highlight", (payload) => {
+      highlight.current = (payload as { id?: string } | undefined)?.id ?? null;
+    });
+    const offCl = sceneEvents.on("clear", () => {
+      highlight.current = null;
+    });
+    return () => {
+      offHl();
+      offCl();
+    };
+  }, []);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
@@ -46,29 +64,34 @@ export default function TechOrbs() {
         Math.sin(a) * o.radius * scale
       );
       mesh.rotation.y = a;
-      mesh.scale.setScalar(o.size);
+      const isHot = highlight.current === TECHS[i].name;
+      mesh.scale.setScalar(o.size * (isHot ? 2.6 : 1));
+      const mat = (mesh as THREE.Mesh).material as THREE.MeshStandardMaterial;
+      if (mat) mat.emissiveIntensity = isHot ? 1.6 : 0.5;
     });
   });
 
   return (
-    <Instances limit={TECHS.length} range={TECHS.length}>
-      <icosahedronGeometry args={[1, 0]} />
-      <meshStandardMaterial
-        color="#ffffff"
-        emissive="#ffffff"
-        emissiveIntensity={0.5}
-        roughness={0.35}
-        metalness={0.2}
-      />
-      {TECHS.map((tech, i) => (
-        <Instance
-          key={tech.name}
-          color={tech.color}
-          ref={(el) => {
-            refs.current[i] = el as unknown as THREE.Object3D | null;
-          }}
+    <group visible={scroll.visible(0.24, 0.48)}>
+      <Instances limit={TECHS.length} range={TECHS.length}>
+        <icosahedronGeometry args={[1, 0]} />
+        <meshStandardMaterial
+          color="#ffffff"
+          emissive="#ffffff"
+          emissiveIntensity={0.5}
+          roughness={0.35}
+          metalness={0.2}
         />
-      ))}
-    </Instances>
+        {TECHS.map((tech, i) => (
+          <Instance
+            key={tech.name}
+            color={tech.color}
+            ref={(el) => {
+              refs.current[i] = el as unknown as THREE.Object3D | null;
+            }}
+          />
+        ))}
+      </Instances>
+    </group>
   );
 }

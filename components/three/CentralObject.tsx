@@ -1,12 +1,14 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
+import { useScroll } from "@react-three/drei";
 import { MeshDistortMaterial, Sparkles } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import { sceneState } from "@/lib/three";
 
 export default function CentralObject() {
+  const scroll = useScroll();
   const group = useRef<THREE.Group>(null);
   const matRef = useRef<React.ElementRef<typeof MeshDistortMaterial>>(null);
 
@@ -26,7 +28,7 @@ export default function CentralObject() {
   });
 
   return (
-    <group ref={group}>
+    <group ref={group} visible={scroll.visible(0, 0.14)}>
       <mesh>
         <torusKnotGeometry args={[0.95, 0.32, 200, 32]} />
         <MeshDistortMaterial

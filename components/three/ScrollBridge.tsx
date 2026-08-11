@@ -2,7 +2,7 @@
 
 import { useScroll } from "@react-three/drei";
 import { useEffect } from "react";
-import { scrollControlsStore } from "@/lib/three";
+import { scrollControlsStore } from "@/lib/dom";
 
 export default function ScrollBridge() {
   const scroll = useScroll();

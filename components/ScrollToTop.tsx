@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { scrollControlsStore } from "@/lib/three";
+import { scrollControlsStore } from "@/lib/dom";
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);

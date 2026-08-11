@@ -292,14 +292,197 @@ body {
   }
 }
 
-/* Autofill styling overrides to maintain white background and black text */
+/* Autofill styling overrides to maintain dark theme and white text */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus {
-  -webkit-text-fill-color: #000000 !important;
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #e2e8f0 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #0a0f1e inset !important;
+  caret-color: var(--accent-cyan);
   transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ========================================
+   HUD SYSTEM — MISSION CONTROL PRIMITIVES
+   ======================================== */
+:root {
+  --panel-bg: rgba(10, 15, 30, 0.6);
+  --panel-bg-solid: #0a0f1e;
+  --hud-line: rgba(148, 163, 184, 0.18);
+  --grid-line: rgba(0, 240, 255, 0.05);
+}
+
+/* HUD glass panel */
+.hud-panel {
+  position: relative;
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--hud-line);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    inset 0 0 40px rgba(0, 240, 255, 0.03);
+}
+
+/* HUD label — mono, uppercase, tracked */
+.hud-label {
+  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Scanline overlay */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.016) 0px,
+    rgba(255, 255, 255, 0.016) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* CRT vignette */
+.crt-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 52%,
+    rgba(3, 6, 14, 0.55) 100%
+  );
+}
+
+/* Glowing text */
+.glow-text {
+  text-shadow: 0 0 8px currentColor, 0 0 26px currentColor;
+}
+
+/* Blink cursor */
+@keyframes hudBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.hud-blink {
+  animation: hudBlink 1s step-end infinite;
+}
+
+/* Radar sweep */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.radar-sweep {
+  position: absolute;
+  inset: -4px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(0, 240, 255, 0.18),
+    transparent 28%,
+    transparent 100%
+  );
+  animation: radarSweep 4s linear infinite;
+}
+
+/* HUD divider line */
+.hud-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hud-line), transparent);
+}
+
+/* Status dot */
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* HUD grid backdrop */
+.hud-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Giant section number watermark */
+.section-num {
+  position: absolute;
+  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: clamp(150px, 32vw, 360px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(148, 163, 184, 0.08);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Segmented level bar segments */
+.seg {
+  height: 3px;
+  background: currentColor;
+  opacity: 0.25;
+  box-shadow: 0 0 6px currentColor;
+}
+.seg--on {
+  opacity: 1;
+}
+
+/* Terminal-style prompt input */
+.hud-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--hud-line);
+  color: var(--text-primary);
+  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.hud-input::placeholder {
+  color: rgba(100, 116, 139, 0.55);
+}
+.hud-input:focus {
+  outline: none;
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.25), 0 0 24px rgba(0, 240, 255, 0.08);
+}
+
+/* Corner bracket utility (used by <Corners/>) */
+.hud-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--hud-line);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+}
+.hud-corner--tl { top: 10px; left: 10px; border-top-width: 1px; border-left-width: 1px; }
+.hud-corner--tr { top: 10px; right: 10px; border-top-width: 1px; border-right-width: 1px; }
+.hud-corner--bl { bottom: 10px; left: 10px; border-bottom-width: 1px; border-left-width: 1px; }
+.hud-corner--br { bottom: 10px; right: 10px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* Global reduced-motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
 }
