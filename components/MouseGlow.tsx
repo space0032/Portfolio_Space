@@ -37,7 +37,7 @@ const MouseGlow = () => {
           left: position.x - 300,
           top: position.y - 300,
           background:
-            "radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, rgba(139, 92, 246, 0.03) 40%, transparent 70%)",
+            "radial-gradient(circle, rgba(212, 175, 106, 0.05) 0%, rgba(155, 127, 224, 0.03) 40%, transparent 70%)",
           transition: "left 0.15s ease-out, top 0.15s ease-out",
         }}
       />

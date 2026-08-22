@@ -52,12 +52,12 @@ export default function SpaceScene({ children }: { children: ReactNode }) {
         camera={{ position: [0, 0, 12], fov: 55 }}
         gl={{ antialias: true, alpha: true }}
       >
-        <color attach="background" args={["#0a0f1e"]} />
-        <fog attach="fog" args={["#0a0f1e", 18, 46]} />
-        <hemisphereLight args={["#3a6bff", "#0a0f1e", 0.6]} />
+        <color attach="background" args={["#08060f"]} />
+        <fog attach="fog" args={["#08060f", 18, 46]} />
+        <hemisphereLight args={["#9b7fe0", "#08060f", 0.6]} />
         <ambientLight intensity={0.35} />
-        <pointLight position={[12, 10, 10]} intensity={180} color="#00f0ff" />
-        <pointLight position={[-12, -8, 6]} intensity={180} color="#8b5cf6" />
+        <pointLight position={[12, 10, 10]} intensity={180} color="#d4af6a" />
+        <pointLight position={[-12, -8, 6]} intensity={180} color="#9b7fe0" />
 
         <Suspense fallback={null}>
           <ScrollControls pages={pages} distance={1} damping={0.25}>
@@ -85,8 +85,8 @@ export default function SpaceScene({ children }: { children: ReactNode }) {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse at center, transparent 45%, rgba(6,9,20,0.6) 100%)",
+            background:
+              "radial-gradient(ellipse at center, transparent 45%, rgba(4,2,10,0.6) 100%)",
         }}
       />
     </div>

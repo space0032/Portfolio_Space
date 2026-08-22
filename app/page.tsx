@@ -12,6 +12,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import MouseGlow from "@/components/MouseGlow";
 import ScrollToTop from "@/components/ScrollToTop";
+import DotNav from "@/components/effects/DotNav";
 
 const SpaceScene = dynamic(() => import("@/components/three/SpaceScene"), {
   ssr: false,
@@ -24,6 +25,7 @@ export default function Home() {
       <MouseGlow />
       <Navbar />
       <HudStatus />
+      <DotNav />
       <SpaceScene>
         <main className="relative">
           <HeroSection />

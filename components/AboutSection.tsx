@@ -24,12 +24,12 @@ const codeContent = [
 ];
 
 const metrics = [
-  { label: "Role", value: "Software Dev Engineer", color: "#00f0ff" },
-  { label: "Location", value: "Gandhinagar, India", color: "#8b5cf6" },
-  { label: "Experience", value: "3+ Years", color: "#f59e0b" },
-  { label: "Focus", value: "Backend · DevOps", color: "#10b981" },
-  { label: "Clearance", value: "MS DevOps Expert", color: "#00f0ff" },
-  { label: "Hackathon", value: "1st Place", color: "#f43f5e" },
+  { label: "Role", value: "Software Dev Engineer", color: "#d4af6a" },
+  { label: "Location", value: "Gandhinagar, India", color: "#9b7fe0" },
+  { label: "Experience", value: "3+ Years", color: "#f0cd8a" },
+  { label: "Focus", value: "Backend · DevOps", color: "#b79df0" },
+  { label: "Clearance", value: "MS DevOps Expert", color: "#d4af6a" },
+  { label: "Hackathon", value: "1st Place", color: "#c15b4a" },
 ];
 
 const timeline = [
@@ -37,19 +37,19 @@ const timeline = [
     year: "2024",
     title: "DevOps Expert Clearance",
     description: "Certified as Microsoft DevOps Engineer Expert — pipelines, IaC & release engineering.",
-    color: "#00f0ff",
+    color: "#d4af6a",
   },
   {
     year: "2025",
     title: "Java Developer",
     description: "Backend systems with Java, Spring Boot & microservices in production.",
-    color: "#8b5cf6",
+    color: "#9b7fe0",
   },
   {
     year: "2026",
     title: "Software Developer",
     description: "Full-stack development, CI/CD pipelines & cloud infrastructure.",
-    color: "#f59e0b",
+    color: "#f0cd8a",
   },
 ];
 
@@ -74,7 +74,7 @@ const AboutSection = () => {
       index={2}
       code="PROFILE"
       name="Mission Log"
-      accent="#8b5cf6"
+      accent="#9b7fe0"
     >
       <div className="grid items-start gap-12 lg:grid-cols-2">
         {/* Left — mission brief code panel */}
@@ -84,9 +84,9 @@ const AboutSection = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
         >
           <div className="hud-panel overflow-hidden">
-            <div className="flex items-center gap-2 border-b border-white/5 px-5 py-3">
+            <div className="flex items-center gap-2 border-b border-line px-5 py-3">
               <span className="hud-label text-text-muted">mission_brief.ts</span>
-              <span className="ml-auto status-dot" style={{ color: "#8b5cf6" }} />
+              <span className="ml-auto status-dot" style={{ color: "#9b7fe0" }} />
             </div>
             <div className="scanlines" />
             <div className="relative p-5 font-mono text-[13px] leading-relaxed">
@@ -143,12 +143,12 @@ const AboutSection = () => {
           {/* Bio-metrics */}
           <div className="hud-panel mb-10 p-5">
             <div className="hud-label mb-4 flex items-center gap-2 text-text-muted">
-              <span className="status-dot" style={{ color: "#8b5cf6" }} />
+              <span className="status-dot" style={{ color: "#9b7fe0" }} />
               Bio-Metrics
             </div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-3">
               {metrics.map((m) => (
-                <div key={m.label} className="border-l border-white/10 pl-3">
+                <div key={m.label} className="border-l border-line pl-3">
                   <div className="hud-label text-text-muted/70">{m.label}</div>
                   <div className="mt-0.5 text-sm font-medium" style={{ color: m.color }}>
                     {m.value}
@@ -160,7 +160,7 @@ const AboutSection = () => {
 
           {/* Journey log timeline */}
           <div className="hud-label mb-4 flex items-center gap-2 text-text-muted">
-            <span className="status-dot" style={{ color: "#f59e0b" }} />
+            <span className="status-dot" style={{ color: "#f0cd8a" }} />
             Journey Log
           </div>
           <div className="relative">
@@ -183,11 +183,11 @@ const AboutSection = () => {
                     className="relative z-10 mt-1.5 h-3.5 w-3.5 flex-shrink-0 rotate-45 border"
                     style={{
                       borderColor: item.color,
-                      backgroundColor: "#0a0f1e",
+                      backgroundColor: "#08060f",
                       boxShadow: `0 0 10px ${item.color}`,
                     }}
                   />
-                  <div className="hud-panel flex-1 p-4 transition-colors hover:border-white/20">
+                  <div className="hud-panel flex-1 p-4 transition-colors hover:border-line-bright">
                     <span className="font-mono text-xs" style={{ color: item.color }}>
                       [{item.year}]
                     </span>

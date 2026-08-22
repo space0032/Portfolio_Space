@@ -1,5 +1,5 @@
 export default function Corners({
-  color = "rgba(148, 163, 184, 0.35)",
+  color = "rgba(155, 127, 224, 0.35)",
   className = "",
 }: {
   color?: string;

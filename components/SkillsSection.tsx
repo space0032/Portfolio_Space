@@ -15,18 +15,18 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  { name: "Java", level: 90, projects: 10, color: "#f89820", category: "languages" },
-  { name: "TypeScript", level: 85, projects: 6, color: "#3178c6", category: "languages" },
-  { name: "Python", level: 70, projects: 4, color: "#3776ab", category: "languages" },
-  { name: "JavaScript", level: 85, projects: 8, color: "#f7df1e", category: "languages" },
-  { name: "React.js", level: 90, projects: 8, color: "#61dafb", category: "frameworks" },
-  { name: "Next.js", level: 88, projects: 5, color: "#ffffff", category: "frameworks" },
-  { name: "Node.js", level: 80, projects: 7, color: "#68a063", category: "frameworks" },
-  { name: "Spring Boot", level: 85, projects: 6, color: "#6db33f", category: "frameworks" },
-  { name: "Docker", level: 75, projects: 3, color: "#2496ed", category: "tools" },
-  { name: "MongoDB", level: 75, projects: 5, color: "#4db33d", category: "tools" },
-  { name: "AWS", level: 70, projects: 3, color: "#ff9900", category: "tools" },
-  { name: "Git", level: 90, projects: 12, color: "#f05032", category: "tools" },
+  { name: "Java", level: 90, projects: 10, color: "#d4af6a", category: "languages" },
+  { name: "TypeScript", level: 85, projects: 6, color: "#9b7fe0", category: "languages" },
+  { name: "Python", level: 70, projects: 4, color: "#f0cd8a", category: "languages" },
+  { name: "JavaScript", level: 85, projects: 8, color: "#b79df0", category: "languages" },
+  { name: "React.js", level: 90, projects: 8, color: "#f0cd8a", category: "frameworks" },
+  { name: "Next.js", level: 88, projects: 5, color: "#ece3d0", category: "frameworks" },
+  { name: "Node.js", level: 80, projects: 7, color: "#9b7fe0", category: "frameworks" },
+  { name: "Spring Boot", level: 85, projects: 6, color: "#d4af6a", category: "frameworks" },
+  { name: "Docker", level: 75, projects: 3, color: "#5c4a8c", category: "tools" },
+  { name: "MongoDB", level: 75, projects: 5, color: "#c15b4a", category: "tools" },
+  { name: "AWS", level: 70, projects: 3, color: "#d4af6a", category: "tools" },
+  { name: "Git", level: 90, projects: 12, color: "#c15b4a", category: "tools" },
 ];
 
 const otherTechs = [
@@ -69,7 +69,7 @@ const SkillsSection = () => {
       index={3}
       code="SYSTEMS"
       name="Tech Inventory"
-      accent="#10b981"
+      accent="#f0cd8a"
     >
       <motion.div
         className="flex flex-wrap justify-center gap-2 pb-10"
@@ -83,8 +83,8 @@ const SkillsSection = () => {
             onClick={() => setActiveCategory(cat.id)}
             className={`cursor-pointer border px-4 py-2 font-mono text-xs uppercase tracking-widest transition-all ${
               activeCategory === cat.id
-                ? "border-accent-emerald/40 bg-accent-emerald/10 text-accent-emerald"
-                : "border-white/10 text-text-muted hover:border-white/25 hover:text-text-secondary"
+                ? "border-gold/40 bg-gold/10 text-gold-bright"
+                : "border-line text-text-muted hover:border-line-bright hover:text-text-secondary"
             }`}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
@@ -108,7 +108,7 @@ const SkillsSection = () => {
             onBlur={onLeave}
           >
             <motion.div
-              className="hud-panel group h-full cursor-pointer p-5 transition-colors hover:border-white/25"
+              className="hud-panel group h-full cursor-pointer p-5 transition-colors hover:border-line-bright"
               whileHover={{ y: -6 }}
             >
               <div className="mb-4 flex items-center justify-between">
@@ -171,7 +171,7 @@ const SkillsSection = () => {
           {otherTechs.map((tech, index) => (
             <motion.span
               key={tech}
-              className="cursor-default border border-white/10 px-4 py-2 font-mono text-xs text-text-secondary transition-colors hover:border-accent-emerald/30 hover:text-accent-emerald"
+              className="cursor-default border border-line px-4 py-2 font-mono text-xs text-text-secondary transition-colors hover:border-gold/50 hover:bg-gold/[0.08] hover:text-gold-bright"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.3, delay: 0.7 + index * 0.03 }}

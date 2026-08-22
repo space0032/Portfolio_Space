@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import SectionShell from "@/components/hud/SectionShell";
 import HudLabel from "@/components/hud/HudLabel";
+import Typewriter from "@/components/effects/Typewriter";
 
 const roles = [
   "Backend Developer",
@@ -21,9 +22,9 @@ const bootLines = [
 ];
 
 const stats = [
-  { label: "Missions Deployed", value: 8, suffix: "+", color: "#00f0ff" },
-  { label: "Certifications", value: 3, suffix: "+", color: "#8b5cf6" },
-  { label: "Stack Systems", value: 15, suffix: "+", color: "#f59e0b" },
+  { label: "Missions Deployed", value: 8, suffix: "+", color: "#d4af6a" },
+  { label: "Certifications", value: 3, suffix: "+", color: "#9b7fe0" },
+  { label: "Stack Systems", value: 15, suffix: "+", color: "#f0cd8a" },
 ];
 
 const useCountUp = (end: number, duration: number = 1500, startCounting: boolean = false) => {
@@ -64,34 +65,9 @@ const StatTag = ({ stat, startStats }: { stat: { label: string; value: number; s
 };
 
 const HeroSection = () => {
-  const [currentRole, setCurrentRole] = useState(0);
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
   const [bootLineIndex, setBootLineIndex] = useState(0);
   const [showBoot, setShowBoot] = useState(false);
   const [startStats, setStartStats] = useState(false);
-
-  useEffect(() => {
-    const currentText = roles[currentRole];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayedText.length < currentText.length) {
-          setDisplayedText(currentText.slice(0, displayedText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        if (displayedText.length > 0) {
-          setDisplayedText(currentText.slice(0, displayedText.length - 1));
-        } else {
-          setIsDeleting(false);
-          setCurrentRole((prev) => (prev + 1) % roles.length);
-        }
-      }
-    }, isDeleting ? 50 : 100);
-
-    return () => clearTimeout(timeout);
-  }, [displayedText, isDeleting, currentRole]);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowBoot(true), 800);
@@ -114,7 +90,7 @@ const HeroSection = () => {
       index={1}
       code="IDENT"
       name="Identification"
-      accent="#00f0ff"
+      accent="#d4af6a"
       overlay={
         <motion.div
           className="absolute bottom-7 left-1/2 z-20 flex -translate-x-1/2 cursor-pointer flex-col items-center gap-2"
@@ -128,7 +104,7 @@ const HeroSection = () => {
           <div className="flex h-8 w-5 items-start justify-center border border-white/25 pt-1.5">
             <motion.div
               className="h-2 w-1"
-              style={{ backgroundColor: "#00f0ff", boxShadow: "0 0 8px #00f0ff" }}
+              style={{ backgroundColor: "#f0cd8a", boxShadow: "0 0 8px #d4af6a" }}
               animate={{ y: [0, 10, 0], opacity: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -145,35 +121,35 @@ const HeroSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="status-dot" style={{ color: "#00f0ff" }} />
-            <HudLabel accent="#00f0ff">System Boot · Welcome Aboard</HudLabel>
+            <HudLabel accent="#d4af6a">System Boot · Welcome Aboard</HudLabel>
           </motion.div>
 
           <motion.h1
-            className="mb-5 text-5xl font-extrabold leading-none tracking-tight sm:text-6xl lg:text-7xl"
+            className="mb-5 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             <span className="hud-label mb-3 block text-text-muted">Operator Name</span>
-            <span className="animate-gradient-shift bg-gradient-to-r from-accent-cyan via-accent-violet to-accent-cyan bg-clip-text bg-[length:200%_auto] text-transparent">
+            <span className="animate-shine bg-gradient-to-r from-parchment via-arcane to-gold-bright bg-clip-text bg-[length:220%_auto] text-transparent">
               ANTARIKSH
             </span>
           </motion.h1>
 
           <motion.div
-            className="mb-7 flex h-9 items-center"
+            className="mb-7 flex h-9 items-center font-mono text-base sm:text-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <span className="mr-3 font-mono text-accent-cyan">&gt;</span>
-            <span className="font-mono text-xl text-accent-violet sm:text-2xl">{displayedText}</span>
-            <span className="cursor-blink" />
+            <span className="mr-3 text-gold">✦</span>
+            <span className="text-text-secondary">
+              <Typewriter phrases={roles} />
+            </span>
           </motion.div>
 
           <motion.p
-            className="mb-9 max-w-lg text-lg leading-relaxed text-text-secondary"
+            className="mb-9 max-w-lg text-lg italic leading-relaxed text-slate"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
@@ -193,7 +169,7 @@ const HeroSection = () => {
               onClick={() => {
                 document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="cursor-pointer bg-gradient-to-r from-accent-cyan to-accent-violet px-7 py-3 font-mono text-xs font-bold uppercase tracking-widest text-bg-primary transition-shadow hover:shadow-lg hover:shadow-accent-cyan/25"
+              className="cursor-pointer bg-gradient-to-br from-arcane to-arcane-dim px-7 py-3 font-mono text-xs font-semibold uppercase tracking-widest text-void transition-shadow hover:shadow-[0_0_26px_rgba(155,127,224,0.55)]"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.96 }}
             >
@@ -203,7 +179,7 @@ const HeroSection = () => {
               onClick={() => {
                 document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="cursor-pointer border border-white/20 px-7 py-3 font-mono text-xs font-bold uppercase tracking-widest text-text-primary transition-colors hover:border-accent-cyan/50 hover:text-accent-cyan"
+              className="cursor-pointer border border-line-bright px-7 py-3 font-mono text-xs font-semibold uppercase tracking-widest text-gold-bright transition-colors hover:border-gold hover:bg-gold/[0.06]"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.96 }}
             >
@@ -231,12 +207,12 @@ const HeroSection = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="hud-panel overflow-hidden shadow-2xl shadow-accent-cyan/5">
-            <div className="flex items-center gap-2 border-b border-white/5 px-5 py-3">
+          <div className="hud-panel overflow-hidden shadow-2xl shadow-arcane/5">
+            <div className="flex items-center gap-2 border-b border-line px-5 py-3">
               <span className="hud-label text-text-muted">boot_log.ts</span>
               <span className="ml-auto flex items-center gap-2">
                 <span className="hud-label text-text-muted/70">LIVE</span>
-                <span className="status-dot" style={{ color: "#00f0ff" }} />
+                <span className="status-dot" style={{ color: "#d4af6a" }} />
               </span>
             </div>
             <div className="scanlines" />
@@ -250,9 +226,9 @@ const HeroSection = () => {
                     transition={{ duration: 0.4 }}
                     className={
                       line.kind === "cmd"
-                        ? "text-accent-cyan"
+                        ? "text-gold"
                         : line.kind === "ok"
-                        ? "text-accent-emerald"
+                        ? "text-gold-bright"
                         : "text-text-secondary"
                     }
                   >
@@ -261,7 +237,7 @@ const HeroSection = () => {
                 ))}
                 {bootLineIndex < bootLines.length && (
                   <div className="flex items-center">
-                    <span className="mr-1 text-accent-cyan">❯</span>
+                    <span className="mr-1 text-gold">❯</span>
                     <span className="cursor-blink" />
                   </div>
                 )}
@@ -270,7 +246,7 @@ const HeroSection = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="mt-4 border-t border-white/5 pt-3"
+                    className="mt-4 border-t border-line pt-3"
                   >
                     <span className="syntax-comment">{"// Mission ready. Awaiting deployment orders."}</span>
                   </motion.div>

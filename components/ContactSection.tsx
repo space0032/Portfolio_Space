@@ -51,9 +51,9 @@ const pinIcon = (
 );
 
 const contactInfo: ContactItem[] = [
-  { icon: mailIcon, label: "Email", value: "antariksh.mankar43@gmail.com", href: "mailto:antariksh.mankar43@gmail.com", color: "#00f0ff" },
-  { icon: linkedinIcon, label: "LinkedIn", value: "antariksh-mankar", href: "https://www.linkedin.com/in/antariksh-mankar/", color: "#8b5cf6" },
-  { icon: pinIcon, label: "Location", value: "Gandhinagar, Gujarat, India", href: null, color: "#f59e0b" },
+  { icon: mailIcon, label: "Email", value: "antariksh.mankar43@gmail.com", href: "mailto:antariksh.mankar43@gmail.com", color: "#d4af6a" },
+  { icon: linkedinIcon, label: "LinkedIn", value: "antariksh-mankar", href: "https://www.linkedin.com/in/antariksh-mankar/", color: "#9b7fe0" },
+  { icon: pinIcon, label: "Location", value: "Gandhinagar, Gujarat, India", href: null, color: "#f0cd8a" },
 ];
 
 const socials = [
@@ -133,7 +133,7 @@ const ContactSection = () => {
     ) : null;
 
   return (
-    <SectionShell ref={ref} id="contact" index={6} code="TRANSMISSION" name="Comms" accent="#00f0ff">
+    <SectionShell ref={ref} id="contact" index={6} code="TRANSMISSION" name="Comms" accent="#d4af6a">
       <div className="grid gap-12 lg:grid-cols-5">
         {/* Left — comms info */}
         <motion.div
@@ -143,7 +143,7 @@ const ContactSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="hud-label mb-6 flex items-center gap-2 text-text-muted">
-            <span className="status-dot" style={{ color: "#00f0ff" }} />
+            <span className="status-dot" style={{ color: "#d4af6a" }} />
             Establish Link
           </div>
 
@@ -156,7 +156,7 @@ const ContactSection = () => {
                   href={item.href || undefined}
                   target={item.label === "LinkedIn" ? "_blank" : undefined}
                   rel={item.label === "LinkedIn" ? "noopener noreferrer" : undefined}
-                  className={`hud-panel group flex items-center justify-between p-4 transition-colors hover:border-white/20 ${isLink ? "cursor-pointer" : ""}`}
+                  className={`hud-panel group flex items-center justify-between p-4 transition-colors hover:border-line-bright ${isLink ? "cursor-pointer" : ""}`}
                 >
                   <div className="flex min-w-0 items-center gap-4">
                     <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center" style={{ color: item.color }}>
@@ -196,12 +196,12 @@ const ContactSection = () => {
 
           <motion.div className="flex justify-center pt-6" initial={{ opacity: 0, scale: 0.8 }} animate={isInView ? { opacity: 1, scale: 1 } : {}} transition={{ delay: 0.9 }}>
             <div className="relative h-36 w-36 overflow-hidden rounded-full">
-              <div className="absolute inset-0 rounded-full border border-white/10" />
-              <div className="absolute inset-5 rounded-full border border-white/10" />
-              <div className="absolute inset-10 rounded-full border border-white/10" />
+              <div className="absolute inset-0 rounded-full border border-line" />
+              <div className="absolute inset-5 rounded-full border border-line" />
+              <div className="absolute inset-10 rounded-full border border-line" />
               <div className="radar-sweep" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="status-dot" style={{ color: "#00f0ff", width: 12, height: 12 }} />
+                <span className="status-dot" style={{ color: "#d4af6a", width: 12, height: 12 }} />
               </div>
             </div>
           </motion.div>
@@ -217,7 +217,7 @@ const ContactSection = () => {
           <div className="hud-panel p-8">
             <div className="mb-7 flex items-center justify-between">
               <div className="hud-label flex items-center gap-2 text-text-muted">
-                <span className="status-dot" style={{ color: "#00f0ff" }} />
+                <span className="status-dot" style={{ color: "#d4af6a" }} />
                 Transmission Channel
               </div>
               <span className="hud-label text-text-muted/70">CH-06</span>

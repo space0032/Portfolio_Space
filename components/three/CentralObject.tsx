@@ -33,8 +33,8 @@ export default function CentralObject() {
         <torusKnotGeometry args={[0.95, 0.32, 200, 32]} />
         <MeshDistortMaterial
           ref={matRef}
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#d4af6a"
+          emissive="#9b7fe0"
           emissiveIntensity={0.5}
           roughness={0.3}
           metalness={0.3}
@@ -42,7 +42,7 @@ export default function CentralObject() {
           speed={2}
         />
       </mesh>
-      <Sparkles count={120} scale={[7, 5, 7]} size={3.2} speed={0.35} color="#8b5cf6" opacity={0.6} />
+      <Sparkles count={120} scale={[7, 5, 7]} size={3.2} speed={0.35} color="#f0cd8a" opacity={0.6} />
     </group>
   );
 }

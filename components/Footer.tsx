@@ -36,7 +36,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-white/5">
+    <footer className="relative border-t border-line/50">
       <div className="hud-grid pointer-events-none absolute inset-0 opacity-40" />
       <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
@@ -62,7 +62,7 @@ const Footer = () => {
                 href={link.url}
                 target={link.name !== "Email" ? "_blank" : undefined}
                 rel={link.name !== "Email" ? "noopener noreferrer" : undefined}
-                className="hud-panel flex h-11 w-11 items-center justify-center text-text-secondary transition-colors hover:text-accent-cyan"
+                className="hud-panel flex h-11 w-11 items-center justify-center text-text-secondary transition-colors hover:text-gold-bright"
                 whileHover={{ scale: 1.1, y: -3 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label={link.name}

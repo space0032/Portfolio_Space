@@ -19,9 +19,9 @@ function makeGlowTexture(): THREE.CanvasTexture {
 }
 
 const NEBULAS = [
-  { color: "#00f0ff", position: [-9, 4, -14], scale: [30, 30, 1], opacity: 0.16 },
-  { color: "#8b5cf6", position: [9, -3, -12], scale: [26, 26, 1], opacity: 0.14 },
-  { color: "#f59e0b", position: [6, 6, -18], scale: [22, 22, 1], opacity: 0.1 },
+  { color: "#9b7fe0", position: [-9, 4, -14], scale: [30, 30, 1], opacity: 0.16 },
+  { color: "#d4af6a", position: [9, -3, -12], scale: [26, 26, 1], opacity: 0.13 },
+  { color: "#c15b4a", position: [6, 6, -18], scale: [22, 22, 1], opacity: 0.09 },
 ] as const;
 
 export default function NebulaSprites() {

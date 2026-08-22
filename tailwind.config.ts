@@ -11,20 +11,45 @@ export default {
       colors: {
         background: "var(--bg-primary)",
         foreground: "var(--text-primary)",
-        "bg-primary": "#0a0f1e",
-        "bg-secondary": "#111827",
-        "accent-cyan": "#00f0ff",
-        "accent-violet": "#8b5cf6",
-        "accent-amber": "#f59e0b",
-        "accent-emerald": "#10b981",
-        "accent-rose": "#f43f5e",
-        "text-primary": "#f1f5f9",
-        "text-secondary": "#94a3b8",
-        "text-muted": "#64748b",
+        void: "#08060f",
+        deep: "#120d1e",
+        panel: "#171122",
+        "bg-primary": "#08060f",
+        "bg-secondary": "#120d1e",
+        gold: {
+          DEFAULT: "#d4af6a",
+          bright: "#f0cd8a",
+          dim: "#a8894e",
+        },
+        arcane: {
+          DEFAULT: "#9b7fe0",
+          dim: "#5c4a8c",
+        },
+        ember: "#c15b4a",
+        parchment: "#ece3d0",
+        slate: {
+          DEFAULT: "#a99bc2",
+          dim: "#6b5c86",
+        },
+        "line": {
+          DEFAULT: "#3a2c4a",
+          bright: "#5c4470",
+        },
+        /* legacy tokens kept for compatibility — remapped to arcane palette */
+        "accent-cyan": "#d4af6a",
+        "accent-violet": "#9b7fe0",
+        "accent-amber": "#f0cd8a",
+        "accent-emerald": "#f0cd8a",
+        "accent-rose": "#c15b4a",
+        "text-primary": "#ece3d0",
+        "text-secondary": "#a99bc2",
+        "text-muted": "#6b5c86",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["JetBrains Mono", "Fira Code", "monospace"],
+        sans: ["var(--font-garamond)", "EB Garamond", "serif"],
+        serif: ["var(--font-garamond)", "EB Garamond", "serif"],
+        display: ["var(--font-cinzel)", "Cinzel", "serif"],
+        mono: ["var(--font-jetbrains)", "JetBrains Mono", "monospace"],
       },
       animation: {
         "fade-in": "fadeIn 0.8s ease-out",
@@ -33,10 +58,11 @@ export default {
         "slide-in-right": "slideInRight 0.6s ease-out",
         float: "float 6s ease-in-out infinite",
         "float-delayed": "float 6s ease-in-out 3s infinite",
-        "glow-pulse": "pulseGlow 2s ease-in-out infinite",
+        "glow-pulse": "pulseGlow 3.6s ease-in-out infinite",
         "gradient-shift": "gradientShift 15s ease infinite",
-        "spin-slow": "spin 8s linear infinite",
+        "spin-slow": "spin 40s linear infinite",
         "bounce-gentle": "bounceGentle 2s ease-in-out infinite",
+        shine: "shine 7s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -61,16 +87,20 @@ export default {
         },
         pulseGlow: {
           "0%, 100%": {
-            boxShadow: "0 0 5px rgba(0, 240, 255, 0.2)",
+            boxShadow: "0 0 5px rgba(212, 175, 106, 0.2)",
           },
           "50%": {
             boxShadow:
-              "0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.1)",
+              "0 0 20px rgba(212, 175, 106, 0.45), 0 0 40px rgba(155, 127, 224, 0.15)",
           },
         },
         bounceGentle: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-5px)" },
+        },
+        shine: {
+          "0%": { backgroundPosition: "0% center" },
+          "100%": { backgroundPosition: "220% center" },
         },
       },
       backdropBlur: {

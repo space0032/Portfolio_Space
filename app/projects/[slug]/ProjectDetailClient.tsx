@@ -49,7 +49,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
               href={project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-full border border-accent-cyan/30 text-accent-cyan text-sm font-medium hover:bg-accent-cyan/10 transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-sm border border-gold/40 text-gold-bright text-sm font-medium hover:bg-gold/10 transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -79,7 +79,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
           className="absolute w-96 h-96 rounded-full opacity-20"
           style={{
             background:
-              "radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(212, 175, 106, 0.13) 0%, transparent 70%)",
             left: "-5%",
             top: "10%",
           }}
@@ -121,10 +121,10 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <span className="px-3 py-1 rounded-full bg-accent-violet/10 text-accent-violet text-xs font-mono border border-accent-violet/20">
+                <span className="px-3 py-1 rounded-sm bg-arcane/10 text-arcane text-xs font-mono border border-arcane/25">
                   {project.category}
                 </span>
-                <span className="px-3 py-1 rounded-full bg-white/5 text-text-muted text-xs font-mono border border-white/5">
+                <span className="px-3 py-1 rounded-sm bg-white/5 text-text-muted text-xs font-mono border border-line">
                   {project.year}
                 </span>
               </motion.div>
@@ -200,7 +200,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                   href={project.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-accent-cyan to-accent-violet text-bg-primary font-semibold text-sm hover:shadow-lg hover:shadow-accent-cyan/25 transition-shadow"
+                  className="flex items-center gap-2 px-7 py-3 rounded-sm bg-gradient-to-r from-arcane to-arcane-dim text-void font-semibold text-sm hover:shadow-lg hover:shadow-arcane/25 transition-shadow"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -215,7 +215,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                 </motion.a>
                 <Link href="/#contact">
                   <motion.span
-                    className="flex items-center gap-2 px-7 py-3 rounded-full border border-text-muted/30 text-text-primary font-semibold text-sm hover:border-accent-cyan/50 hover:text-accent-cyan transition-colors cursor-pointer"
+                    className="flex items-center gap-2 px-7 py-3 rounded-sm border border-line-bright text-text-primary font-semibold text-sm hover:border-gold/50 hover:text-gold-bright transition-colors cursor-pointer"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -275,7 +275,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                   return (
                     <motion.div
                       key={tech}
-                      className="absolute px-3 py-1.5 rounded-full glass-card text-xs font-mono text-text-secondary whitespace-nowrap"
+                      className="absolute px-3 py-1.5 rounded-sm glass-card text-xs font-mono text-text-secondary whitespace-nowrap"
                       style={{
                         left: `calc(50% + ${x}px - 30px)`,
                         top: `calc(50% + ${y}px - 12px)`,
@@ -295,7 +295,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
       </section>
 
       {/* Tech Stack Strip */}
-      <section className="border-y border-white/5 bg-white/[0.02]">
+      <section className="border-y border-line bg-deep/40">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide">
             <span className="text-text-muted text-xs uppercase tracking-wider flex-shrink-0">
@@ -304,7 +304,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
             {project.techStack.map((tech, i) => (
               <motion.span
                 key={tech}
-                className="px-4 py-2 rounded-full bg-white/5 text-text-secondary text-sm border border-white/5 flex-shrink-0 hover:border-accent-cyan/20 hover:text-accent-cyan transition-colors"
+                className="px-4 py-2 rounded-sm bg-panel text-text-secondary text-sm border border-line flex-shrink-0 hover:border-gold/30 hover:text-gold-bright transition-colors"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 + i * 0.05 }}
@@ -445,19 +445,19 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                 </h3>
 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between py-3 border-b border-white/5">
+                  <div className="flex items-center justify-between py-3 border-b border-line">
                     <span className="text-text-muted text-sm">Category</span>
                     <span className="text-text-primary text-sm font-medium">
                       {project.category}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-3 border-b border-white/5">
+                  <div className="flex items-center justify-between py-3 border-b border-line">
                     <span className="text-text-muted text-sm">Year</span>
                     <span className="text-text-primary text-sm font-medium">
                       {project.year}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between py-3 border-b border-white/5">
+                  <div className="flex items-center justify-between py-3 border-b border-line">
                     <span className="text-text-muted text-sm">Role</span>
                     <span className="text-text-primary text-sm font-medium">
                       {project.role}
@@ -471,7 +471,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                       {project.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 rounded-full bg-white/5 text-text-muted text-xs border border-white/5"
+                          className="px-3 py-1 rounded-sm bg-panel text-text-muted text-xs border border-line"
                         >
                           {tech}
                         </span>
@@ -485,7 +485,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                   href={project.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-accent-cyan to-accent-violet text-bg-primary font-semibold text-sm hover:shadow-lg hover:shadow-accent-cyan/25 transition-shadow"
+                  className="w-full mt-6 flex items-center justify-center gap-2 px-6 py-3 rounded-sm bg-gradient-to-r from-arcane to-arcane-dim text-void font-semibold text-sm hover:shadow-lg hover:shadow-arcane/25 transition-shadow"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -502,7 +502,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                 {/* Recruiter CTA */}
                 <Link href="/#contact" className="block mt-3">
                   <motion.div
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-accent-amber/30 text-accent-amber font-semibold text-sm hover:bg-accent-amber/5 transition-colors cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-sm border border-gold/40 text-gold-bright font-semibold text-sm hover:bg-gold/5 transition-colors cursor-pointer"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -516,7 +516,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
       </section>
 
       {/* Related Projects */}
-      <section className="py-20 px-4 border-t border-white/5">
+      <section className="py-20 px-4 border-t border-line">
         <div className="max-w-6xl mx-auto">
           <motion.h2
             className="text-2xl font-bold text-text-primary mb-8"
@@ -539,7 +539,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                 <Link href={`/projects/${related.slug}`}>
                   <motion.div
                     className="glass-card rounded-2xl p-6 h-full group cursor-pointer"
-                    whileHover={{ y: -5, borderColor: "rgba(0,240,255,0.2)" }}
+                    whileHover={{ y: -5, borderColor: "rgba(212,175,106,0.3)" }}
                   >
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${related.gradient} opacity-30 rounded-2xl group-hover:opacity-50 transition-opacity`}
@@ -548,7 +548,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                       <span className="text-3xl mb-4 block">
                         {related.icon}
                       </span>
-                      <h3 className="text-lg font-bold text-text-primary mb-2 group-hover:text-accent-cyan transition-colors">
+                      <h3 className="text-lg font-bold text-text-primary mb-2 group-hover:text-gold-bright transition-colors">
                         {related.title}
                       </h3>
                       <p className="text-text-secondary text-sm line-clamp-2 mb-4">
@@ -558,7 +558,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                         {related.techStack.slice(0, 3).map((tech) => (
                           <span
                             key={tech}
-                            className="px-2 py-0.5 rounded-full bg-white/5 text-text-muted text-xs"
+                            className="px-2 py-0.5 rounded-sm bg-panel text-text-muted text-xs"
                           >
                             {tech}
                           </span>
@@ -594,7 +594,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link href="/#contact">
                   <motion.span
-                    className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-accent-cyan to-accent-violet text-bg-primary font-semibold text-sm hover:shadow-lg hover:shadow-accent-cyan/25 transition-shadow cursor-pointer"
+                    className="flex items-center gap-2 px-8 py-3.5 rounded-sm bg-gradient-to-r from-arcane to-arcane-dim text-void font-semibold text-sm hover:shadow-lg hover:shadow-arcane/25 transition-shadow cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -603,7 +603,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
                 </Link>
                 <Link href="/">
                   <motion.span
-                    className="flex items-center gap-2 px-8 py-3.5 rounded-full border border-text-muted/30 text-text-primary font-semibold text-sm hover:border-accent-cyan/50 hover:text-accent-cyan transition-colors cursor-pointer"
+                    className="flex items-center gap-2 px-8 py-3.5 rounded-sm border border-line-bright text-text-primary font-semibold text-sm hover:border-gold/50 hover:text-gold-bright transition-colors cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -617,7 +617,7 @@ export default function ProjectDetailClient({ slug }: { slug: string }) {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-8 px-4 text-center">
+      <footer className="border-t border-line py-8 px-4 text-center">
         <p className="text-text-muted text-sm">
           © {new Date().getFullYear()} Antariksh Mankar · Built with Next.js &
           TypeScript

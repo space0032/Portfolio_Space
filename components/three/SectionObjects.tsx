@@ -29,15 +29,15 @@ export function ProfileObject() {
     >
       <mesh>
         <icosahedronGeometry args={[1.2, 0]} />
-        <meshBasicMaterial color="#8b5cf6" wireframe transparent opacity={0.55} />
+        <meshBasicMaterial color="#9b7fe0" wireframe transparent opacity={0.55} />
       </mesh>
       <mesh rotation={[Math.PI / 2.2, 0, 0]}>
         <torusGeometry args={[2.2, 0.02, 8, 80]} />
-        <meshBasicMaterial color="#00f0ff" transparent opacity={0.35} />
+        <meshBasicMaterial color="#d4af6a" transparent opacity={0.35} />
       </mesh>
       <mesh rotation={[Math.PI / 1.8, 0.6, 0]}>
         <torusGeometry args={[1.9, 0.015, 8, 80]} />
-        <meshBasicMaterial color="#8b5cf6" transparent opacity={0.25} />
+        <meshBasicMaterial color="#9b7fe0" transparent opacity={0.25} />
       </mesh>
     </group>
   );
@@ -59,14 +59,14 @@ export function SystemCore() {
       <mesh ref={core}>
         <octahedronGeometry args={[0.55, 0]} />
         <meshStandardMaterial
-          color="#10b981"
-          emissive="#10b981"
+          color="#f0cd8a"
+          emissive="#d4af6a"
           emissiveIntensity={1.4}
           roughness={0.2}
           metalness={0.1}
         />
       </mesh>
-      <Sparkles count={60} scale={[3, 3, 3]} size={2.5} speed={0.4} color="#10b981" opacity={0.6} />
+      <Sparkles count={60} scale={[3, 3, 3]} size={2.5} speed={0.4} color="#f0cd8a" opacity={0.6} />
     </group>
   );
 }
@@ -93,7 +93,7 @@ export function FlightPath() {
     <group visible={scroll.visible(0.36, 0.64)}>
       <Line
         points={path.points}
-        color="#f59e0b"
+        color="#c15b4a"
         lineWidth={1}
         transparent
         opacity={0.35}
@@ -101,7 +101,7 @@ export function FlightPath() {
       {path.beacons.map((p, i) => (
         <mesh key={i} position={p}>
           <sphereGeometry args={[0.09, 16, 16]} />
-          <meshBasicMaterial color="#f59e0b" />
+          <meshBasicMaterial color="#d4af6a" />
         </mesh>
       ))}
     </group>
@@ -110,8 +110,8 @@ export function FlightPath() {
 
 /* ---------------------- SECTOR 05 · ARCHIVE project orbs ---------------------- */
 const ORBIT_COLORS = [
-  "#00f0ff", "#8b5cf6", "#f59e0b", "#f43f5e",
-  "#10b981", "#61dafb", "#f89820", "#3178c6",
+  "#d4af6a", "#9b7fe0", "#f0cd8a", "#c15b4a",
+  "#b79df0", "#f0cd8a", "#d4af6a", "#5c4a8c",
 ];
 
 export function ProjectOrbits() {
@@ -167,8 +167,8 @@ export function ProjectOrbits() {
       <Instances limit={ORBIT_COLORS.length} range={ORBIT_COLORS.length}>
         <sphereGeometry args={[1, 16, 16]} />
         <meshStandardMaterial
-          color="#ffffff"
-          emissive="#ffffff"
+          color="#ece3d0"
+          emissive="#ece3d0"
           emissiveIntensity={0.6}
           roughness={0.3}
           metalness={0.2}
@@ -211,13 +211,13 @@ export function SignalBeacon() {
       <mesh>
         <icosahedronGeometry args={[0.65, 1]} />
         <meshStandardMaterial
-          color="#00f0ff"
-          emissive="#00f0ff"
+          color="#d4af6a"
+          emissive="#9b7fe0"
           emissiveIntensity={1.6}
           roughness={0.2}
         />
       </mesh>
-      <Sparkles count={80} scale={[6, 6, 6]} size={3} speed={0.5} color="#00f0ff" opacity={0.7} />
+      <Sparkles count={80} scale={[6, 6, 6]} size={3} speed={0.5} color="#f0cd8a" opacity={0.7} />
       {[0, 1, 2, 3, 4].map((i) => (
         <mesh
           key={i}
@@ -228,7 +228,7 @@ export function SignalBeacon() {
         >
           <torusGeometry args={[1, 0.015, 8, 48]} />
           <meshBasicMaterial
-            color="#00f0ff"
+            color="#d4af6a"
             transparent
             opacity={0.4}
             side={THREE.DoubleSide}

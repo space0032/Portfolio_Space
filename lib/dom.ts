@@ -8,12 +8,12 @@ export const activeSection: MotionValue<number> = motionValue(0);
 
 /** Human-readable metadata for the six sectors. */
 export const SECTORS = [
-  { index: 1, code: "IDENT", name: "Identification", color: "#00f0ff" },
-  { index: 2, code: "PROFILE", name: "Mission Log", color: "#8b5cf6" },
-  { index: 3, code: "SYSTEMS", name: "Tech Inventory", color: "#10b981" },
-  { index: 4, code: "LOG", name: "Flight Record", color: "#f59e0b" },
-  { index: 5, code: "ARCHIVE", name: "Project Archive", color: "#f43f5e" },
-  { index: 6, code: "TRANSMISSION", name: "Comms", color: "#00f0ff" },
+  { index: 1, code: "IDENT", name: "Identification", color: "#d4af6a" },
+  { index: 2, code: "PROFILE", name: "Mission Log", color: "#9b7fe0" },
+  { index: 3, code: "SYSTEMS", name: "Tech Inventory", color: "#f0cd8a" },
+  { index: 4, code: "LOG", name: "Flight Record", color: "#c15b4a" },
+  { index: 5, code: "ARCHIVE", name: "Project Archive", color: "#b79df0" },
+  { index: 6, code: "TRANSMISSION", name: "Comms", color: "#d4af6a" },
 ] as const;
 
 type SceneHandler = (payload?: unknown) => void;

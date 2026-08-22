@@ -49,7 +49,7 @@ const ScrollToTop = () => {
       initial={{ opacity: 0, scale: 0 }}
       animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
       transition={{ duration: 0.3 }}
-      whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(0, 240, 255, 0.3)" }}
+      whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(212, 175, 106, 0.3)" }}
       whileTap={{ scale: 0.9 }}
       aria-label="Scroll to top"
     >

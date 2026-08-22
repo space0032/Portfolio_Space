@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Cinzel, EB_Garamond, JetBrains_Mono } from "next/font/google";
 import MotionProvider from "@/components/MotionProvider";
+import Overlays from "@/components/effects/Overlays";
+import CustomCursor from "@/components/effects/CustomCursor";
+import ScrollProgress from "@/components/effects/ScrollProgress";
 import "./globals.css";
 
-const inter = Inter({
+const cinzel = Cinzel({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-cinzel",
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  variable: "--font-garamond",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -43,8 +55,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html
+      lang="en"
+      className={`${cinzel.variable} ${ebGaramond.variable} ${jetbrainsMono.variable}`}
+    >
       <body className="font-sans antialiased" suppressHydrationWarning>
+        <ScrollProgress />
+        <CustomCursor />
+        <Overlays />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

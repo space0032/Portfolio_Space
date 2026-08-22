@@ -41,7 +41,7 @@ const certifications: Certification[] = [
     date: "2024",
     icon: "🏆",
     featured: true,
-    color: "#00f0ff",
+    color: "#d4af6a",
   },
   {
     id: 2,
@@ -49,7 +49,7 @@ const certifications: Certification[] = [
     issuer: "IBM",
     date: "2024",
     icon: "💼",
-    color: "#8b5cf6",
+    color: "#9b7fe0",
   },
   {
     id: 3,
@@ -57,7 +57,7 @@ const certifications: Certification[] = [
     issuer: "Oracle",
     date: "2024",
     icon: "🎓",
-    color: "#f59e0b",
+    color: "#f0cd8a",
   },
 ];
 
@@ -113,7 +113,7 @@ const AchievementsSection = () => {
       index={4}
       code="LOG"
       name="Flight Record"
-      accent="#f59e0b"
+      accent="#c15b4a"
     >
       <div className="grid gap-10 lg:grid-cols-[240px_1fr]">
         {/* Route select */}
@@ -124,7 +124,7 @@ const AchievementsSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="hud-label mb-4 flex items-center gap-2 text-text-muted">
-            <span className="status-dot" style={{ color: "#f59e0b" }} />
+            <span className="status-dot" style={{ color: "#c15b4a" }} />
             Route Select
           </div>
           <div className="flex gap-2 lg:flex-col">
@@ -136,15 +136,15 @@ const AchievementsSection = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`group flex flex-1 cursor-pointer items-center gap-3 border px-4 py-3 text-left transition-all lg:flex-none ${
                     active
-                      ? "border-accent-amber/40 bg-accent-amber/5"
-                      : "border-white/10 hover:border-white/25"
+                      ? "border-gold-bright/40 bg-gold-bright/5"
+                      : "border-line hover:border-line-bright"
                   }`}
                   whileHover={{ x: 3 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <span
                     className={`hud-label ${
-                      active ? "text-accent-amber" : "text-text-muted"
+                      active ? "text-gold-bright" : "text-text-muted"
                     }`}
                   >
                     {tab.num}
@@ -152,7 +152,7 @@ const AchievementsSection = () => {
                   <span
                     className={`font-mono text-sm ${
                       active
-                        ? "text-accent-amber"
+                        ? "text-gold-bright"
                         : "text-text-secondary group-hover:text-text-primary"
                     }`}
                   >
@@ -193,14 +193,14 @@ const AchievementsSection = () => {
                     <span
                       className="absolute -left-10 mt-2 h-3.5 w-3.5 rotate-45 border"
                       style={{
-                        borderColor: "#f59e0b",
-                        backgroundColor: "#0a0f1e",
-                        boxShadow: "0 0 10px rgba(245,158,11,0.5)",
+                        borderColor: "#d4af6a",
+                        backgroundColor: "#08060f",
+                        boxShadow: "0 0 10px rgba(212,175,106,0.5)",
                       }}
                     />
-                    <div className="hud-panel p-6 transition-colors hover:border-white/20">
+                    <div className="hud-panel p-6 transition-colors hover:border-line-bright">
                       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                        <span className="font-mono text-xs text-accent-amber">
+                        <span className="font-mono text-xs text-gold-bright">
                           [ {exp.year} ]
                         </span>
                         <span className="hud-label text-text-muted/70">
@@ -217,7 +217,7 @@ const AchievementsSection = () => {
                         {exp.technologies.map((tech) => (
                           <span
                             key={tech}
-                            className="border border-white/10 px-3 py-1 font-mono text-xs text-text-muted"
+                            className="border border-line px-3 py-1 font-mono text-xs text-text-muted"
                           >
                             {tech}
                           </span>
@@ -254,9 +254,9 @@ const AchievementsSection = () => {
                         <span
                           className="hud-label absolute -top-3 right-4 border px-3 py-1"
                           style={{
-                            color: "#00f0ff",
-                            borderColor: "rgba(0,240,255,0.3)",
-                            backgroundColor: "rgba(0,240,255,0.12)",
+                            color: "#f0cd8a",
+                            borderColor: "rgba(240,205,138,0.3)",
+                            backgroundColor: "rgba(240,205,138,0.12)",
                           }}
                         >
                           Featured
@@ -298,12 +298,12 @@ const AchievementsSection = () => {
                   >
                     <motion.div
                       className="hud-panel h-full p-6"
-                      whileHover={{ y: -6, borderColor: "rgba(245,158,11,0.3)" }}
+                      whileHover={{ y: -6, borderColor: "rgba(240,205,138,0.3)" }}
                     >
                       <div className="flex items-start gap-4">
                         <span className="text-3xl">{achievement.icon}</span>
                         <div>
-                          <div className="hud-label mb-2 text-accent-amber">
+                          <div className="hud-label mb-2 text-gold-bright">
                             {achievement.date}
                           </div>
                           <h3 className="mb-2 text-lg font-bold text-text-primary">

@@ -76,8 +76,8 @@ export default function TechOrbs() {
       <Instances limit={TECHS.length} range={TECHS.length}>
         <icosahedronGeometry args={[1, 0]} />
         <meshStandardMaterial
-          color="#ffffff"
-          emissive="#ffffff"
+          color="#ece3d0"
+          emissive="#ece3d0"
           emissiveIntensity={0.5}
           roughness={0.35}
           metalness={0.2}

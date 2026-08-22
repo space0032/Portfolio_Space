@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useMotionValueEvent, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { activeSection, scrollProgress, SECTORS, scrollControlsStore } from "@/lib/dom";
+import { activeSection, SECTORS, scrollControlsStore } from "@/lib/dom";
 
 const navLinks = [
   { id: "home", code: "IDENT", index: 0 },
@@ -19,7 +19,6 @@ const RESUME_URL =
 const Navbar = () => {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const progressWidth = useTransform(scrollProgress, (v) => `${Math.round(v * 100)}%`);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstItemRef = useRef<HTMLButtonElement>(null);
 
@@ -63,65 +62,59 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(8,6,15,0.92) 30%, rgba(8,6,15,0))",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
+        }}
       >
-        {/* Scroll progress hairline */}
-        <motion.div
-          className="h-0.5 origin-left"
-          style={{
-            width: progressWidth,
-            background: "linear-gradient(90deg, var(--accent-cyan), var(--accent-violet))",
-          }}
-        />
-
         <div
           className={`transition-all duration-500 ${
-            activeIdx > 0 ? "border-b border-white/5 bg-bg-primary/70 backdrop-blur-md" : ""
+            activeIdx > 0 ? "border-b border-line/60" : ""
           }`}
         >
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             {/* Brand */}
             <button
               onClick={() => scrollTo("home")}
-              className="group flex cursor-pointer items-center gap-2"
+              className="group flex cursor-pointer items-center gap-2.5"
             >
-              <span className="hud-label opacity-60 transition-opacity group-hover:opacity-100" style={{ color: activeMeta.color }}>
-                &lt;
+              {/* Sigil — circle + rotated square */}
+              <span className="relative block h-4 w-4">
+                <span className="absolute inset-0 rounded-full border border-gold/70 transition-colors group-hover:border-gold" />
+                <span className="absolute inset-[5px] rotate-45 border border-gold transition-transform duration-500 group-hover:rotate-[225deg]" />
               </span>
-              <span className="font-mono text-lg font-bold tracking-wide text-text-primary transition-colors group-hover:text-accent-cyan">
-                Antariksh
-              </span>
-              <span className="hud-label opacity-60 transition-opacity group-hover:opacity-100" style={{ color: activeMeta.color }}>
-                /&gt;
+              <span className="font-display text-sm tracking-[0.16em] text-slate transition-colors group-hover:text-gold-bright">
+                ANTARIKSH · ARCHIVE
               </span>
             </button>
 
             {/* Desktop sector links */}
-            <div className="hidden items-center gap-1 lg:flex">
+            <div className="hidden items-center gap-7 lg:flex">
               {navLinks.map((link) => {
                 const active = activeIdx === link.index;
                 return (
                   <button
                     key={link.id}
                     onClick={() => scrollTo(link.id)}
-                    className="group relative cursor-pointer px-3 py-2"
+                    className="group relative cursor-pointer py-2"
                   >
                     <span
-                      className={`hud-label transition-colors ${
-                        active ? "" : "text-text-muted group-hover:text-text-primary"
+                      className={`font-mono text-xs tracking-[0.06em] transition-colors ${
+                        active
+                          ? "text-gold-bright"
+                          : "text-slate group-hover:text-gold-bright"
                       }`}
-                      style={active ? { color: activeMeta.color } : undefined}
                     >
-                      <span className="opacity-50">{String(link.index + 1).padStart(2, "0")}</span>{" "}
+                      <span className="mr-1 text-[9px] text-arcane">✦</span>
                       {link.code}
                     </span>
                     {active && (
                       <motion.span
                         layoutId="navActive"
-                        className="absolute -bottom-0.5 left-2 right-2 h-px"
-                        style={{
-                          backgroundColor: activeMeta.color,
-                          boxShadow: `0 0 8px ${activeMeta.color}`,
-                        }}
+                        className="absolute -bottom-0.5 left-1 right-1 h-px bg-gold"
+                        style={{ boxShadow: "0 0 8px #d4af6a" }}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -141,7 +134,7 @@ const Navbar = () => {
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden items-center gap-2 border border-accent-cyan/30 px-4 py-2 font-mono text-xs tracking-widest text-accent-cyan transition-all hover:bg-accent-cyan/10 sm:flex"
+                className="hidden items-center gap-2 border border-line-bright px-4 py-2 font-mono text-xs tracking-widest text-gold-bright transition-all hover:border-gold hover:bg-gold/[0.06] sm:flex"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
               >
@@ -191,7 +184,7 @@ const Navbar = () => {
             variants={{ open: { visibility: "visible" }, closed: { visibility: "hidden" } }}
           >
             <motion.div
-              className="absolute inset-0 bg-bg-primary/95 backdrop-blur-md"
+              className="absolute inset-0 bg-void/95 backdrop-blur-md"
               variants={{ open: { opacity: 1 }, closed: { opacity: 0 } }}
               onClick={closeMenu}
             />
@@ -219,9 +212,12 @@ const Navbar = () => {
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ delay: 0.06 * i + 0.1 }}
                   >
-                    <span className="hud-label text-text-muted">{String(link.index + 1).padStart(2, "0")}</span>
+                    <span className="font-mono text-xs text-text-muted">
+                      <span className="text-arcane">✦</span>{" "}
+                      {String(link.index + 1).padStart(2, "0")}
+                    </span>
                     <span
-                      className="text-3xl font-bold tracking-widest transition-colors"
+                      className="font-display text-2xl font-semibold tracking-widest transition-colors"
                       style={{ color: active ? meta.color : "var(--text-secondary)" }}
                     >
                       {link.code}

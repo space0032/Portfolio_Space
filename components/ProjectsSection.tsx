@@ -74,7 +74,7 @@ const ProjectsSection = () => {
       index={5}
       code="ARCHIVE"
       name="Project Archive"
-      accent="#f43f5e"
+      accent="#b79df0"
     >
       <motion.div
         className="flex flex-wrap justify-center gap-2 pb-10"
@@ -88,8 +88,8 @@ const ProjectsSection = () => {
             onClick={() => setActiveFilter(filter)}
             className={`cursor-pointer border px-4 py-2 font-mono text-xs uppercase tracking-widest transition-all ${
               activeFilter === filter
-                ? "border-accent-rose/40 bg-accent-rose/10 text-accent-rose"
-                : "border-white/10 text-text-muted hover:border-white/25 hover:text-text-secondary"
+                ? "border-gold/40 bg-gold/10 text-gold-bright"
+                : "border-line text-text-muted hover:border-line-bright hover:text-text-secondary"
             }`}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
@@ -121,7 +121,7 @@ const ProjectsSection = () => {
               <TiltCard className="h-full">
                 <div
                   className={`hud-panel group relative h-full overflow-hidden p-6 transition-colors ${
-                    project.featured ? "!border-accent-rose/30" : "hover:border-white/20"
+                    project.featured ? "!border-gold/30" : "hover:border-line-bright"
                   }`}
                 >
                   {/* Gradient glow */}
@@ -132,45 +132,45 @@ const ProjectsSection = () => {
                   <div className="relative flex h-full min-h-[280px] flex-col">
                     {/* Header row */}
                     <div className="mb-4 flex items-start justify-between">
-                      <span className="hud-label" style={{ color: "#f43f5e" }}>
+                      <span className="hud-label" style={{ color: "#c15b4a" }}>
                         PRJ-{String(project.id).padStart(2, "0")}
                       </span>
                       <span className="text-3xl">{project.icon}</span>
                     </div>
 
                     {project.featured && (
-                      <span className="hud-label mb-3 w-fit border border-accent-rose/30 px-2 py-0.5 text-accent-rose">
+                      <span className="hud-label mb-3 w-fit border border-gold/40 px-2 py-0.5 text-gold-bright">
                         ★ Featured
                       </span>
                     )}
 
-                    <h3 className="mb-2 text-xl font-bold text-text-primary transition-colors group-hover:text-accent-cyan">
+                    <h3 className="mb-2 font-display text-xl font-semibold text-parchment transition-colors group-hover:text-gold-bright">
                       {project.title}
                     </h3>
-                    <p className="mb-auto line-clamp-3 text-sm leading-relaxed text-text-secondary">
+                    <p className="mb-auto line-clamp-3 text-sm leading-relaxed text-slate">
                       {project.description}
                     </p>
 
                     {/* Footer */}
-                    <div className="mt-5 flex items-end justify-between gap-3 border-t border-white/5 pt-4">
+                    <div className="mt-5 flex items-end justify-between gap-3 border-t border-line pt-4">
                       <div className="flex flex-wrap gap-2">
                         {project.techStack.slice(0, 3).map((tech) => (
                           <span
                             key={tech}
-                            className="border border-white/10 px-2.5 py-1 font-mono text-[11px] text-text-muted"
+                            className="border border-line px-2.5 py-1 font-mono text-[11px] text-slate-dim"
                           >
                             {tech}
                           </span>
                         ))}
                         {project.techStack.length > 3 && (
-                          <span className="border border-white/10 px-2.5 py-1 font-mono text-[11px] text-text-muted">
+                          <span className="border border-line px-2.5 py-1 font-mono text-[11px] text-text-muted">
                             +{project.techStack.length - 3}
                           </span>
                         )}
                       </div>
                       <Link href={`/projects/${project.slug}`} className="flex-shrink-0">
                         <motion.span
-                          className="flex cursor-pointer items-center gap-1.5 font-mono text-xs text-accent-cyan transition-colors hover:text-accent-violet"
+                          className="flex cursor-pointer items-center gap-1.5 font-mono text-xs text-gold transition-colors hover:text-gold-bright"
                           whileHover={{ x: 3 }}
                         >
                           OPEN
@@ -198,10 +198,10 @@ const ProjectsSection = () => {
           href="https://github.com/space0032"
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 font-mono text-sm text-text-secondary transition-colors hover:text-accent-cyan"
+          className="group inline-flex items-center gap-2 font-mono text-sm text-text-secondary transition-colors hover:text-gold-bright"
           whileHover={{ x: 5 }}
         >
-          <span className="text-accent-rose">&gt;</span>
+          <span className="text-gold">&gt;</span>
           view all_missions on github
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
