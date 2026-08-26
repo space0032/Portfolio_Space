@@ -45,6 +45,7 @@ export default function ContactForm() {
     setStatus("sending");
 
     try {
+      console.log("[Contact] Sending via EmailJS:", { SERVICE_ID, TEMPLATE_ID, hasKey: !!PUBLIC_KEY });
       await emailjs.send(
         SERVICE_ID,
         TEMPLATE_ID,
@@ -54,7 +55,8 @@ export default function ContactForm() {
 
       form.reset();
       setStatus("sent");
-    } catch {
+    } catch (err) {
+      console.error("[Contact] EmailJS error:", err);
       setStatus("error");
     }
   }
