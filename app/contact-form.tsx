@@ -1,11 +1,6 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import emailjs from "@emailjs/browser";
-
-const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "";
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "";
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "";
 
 const ArrowUpRight = () => (
   <svg aria-hidden="true" viewBox="0 0 20 20" className="icon">
@@ -21,42 +16,25 @@ export default function ContactForm() {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const company = String(formData.get("company") ?? "").trim();
-    if (company) {
-      form.reset();
-      setStatus("sent");
-      return;
-    }
-
-    const name = String(formData.get("from_name") ?? "").trim();
-    const email = String(formData.get("reply_to") ?? "").trim();
-    const message = String(formData.get("message") ?? "").trim();
-
-    if (name.length < 2 || !email.includes("@") || message.length < 10) {
-      setStatus("error");
-      return;
-    }
-
-    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-      setStatus("error");
-      return;
-    }
-
     setStatus("sending");
 
     try {
-      console.log("[Contact] Sending via EmailJS:", { SERVICE_ID, TEMPLATE_ID, hasKey: !!PUBLIC_KEY });
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        { from_name: name, reply_to: email, message, to_name: "Antariksh Mankar" },
-        { publicKey: PUBLIC_KEY },
-      );
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(formData.get("from_name") ?? "").trim(),
+          email: String(formData.get("reply_to") ?? "").trim(),
+          message: String(formData.get("message") ?? "").trim(),
+          company: String(formData.get("company") ?? "").trim(),
+        }),
+      });
+
+      if (!response.ok) throw new Error("Message delivery failed");
 
       form.reset();
       setStatus("sent");
-    } catch (err) {
-      console.error("[Contact] EmailJS error:", err);
+    } catch {
       setStatus("error");
     }
   }
