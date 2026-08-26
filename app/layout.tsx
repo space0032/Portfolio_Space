@@ -1,70 +1,30 @@
 import type { Metadata } from "next";
-import { Cinzel, EB_Garamond, JetBrains_Mono } from "next/font/google";
-import MotionProvider from "@/components/MotionProvider";
-import Overlays from "@/components/effects/Overlays";
-import CustomCursor from "@/components/effects/CustomCursor";
-import ScrollProgress from "@/components/effects/ScrollProgress";
 import "./globals.css";
 
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  variable: "--font-cinzel",
-  weight: ["500", "600", "700"],
-  display: "swap",
-});
-
-const ebGaramond = EB_Garamond({
-  subsets: ["latin"],
-  variable: "--font-garamond",
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Antariksh Mankar | Software Development Engineer",
-  description:
-    "Portfolio of Antariksh Mankar — Microsoft Certified DevOps Engineer Expert, Backend Developer, and Full Stack Engineer specializing in Java, React, and Cloud technologies.",
-  keywords: [
-    "Antariksh Mankar",
-    "Software Developer",
-    "DevOps Engineer",
-    "Java Developer",
-    "Full Stack",
-    "React",
-    "Portfolio",
-  ],
-  authors: [{ name: "Antariksh Mankar" }],
+  metadataBase: new URL("https://antariksh-mankar-portfolio.antariksh-mankar43.chatgpt.site"),
+  title: "Antariksh Mankar - Backend Engineer",
+  description: "Backend engineer building scalable Java and Spring Boot systems, AI-integrated platforms, and reliable delivery pipelines.",
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Antariksh Mankar | Software Development Engineer",
-    description:
-      "Microsoft Certified DevOps Engineer Expert crafting scalable systems with Java, React & Cloud technologies.",
+    title: "Antariksh Mankar - Backend Engineer",
+    description: "Java, Spring Boot, AI integrations, and production-minded backend systems.",
     type: "website",
+    url: "/",
+    siteName: "Antariksh Mankar",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Antariksh Mankar - Backend Engineer" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Antariksh Mankar - Backend Engineer",
+    description: "Java, Spring Boot, AI integrations, and production-minded backend systems.",
+    images: ["/og.png"],
+  },
+  robots: { index: true, follow: true },
+  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+  other: { "codex-preview": "development" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html
-      lang="en"
-      className={`${cinzel.variable} ${ebGaramond.variable} ${jetbrainsMono.variable}`}
-    >
-      <body className="font-sans antialiased" suppressHydrationWarning>
-        <ScrollProgress />
-        <CustomCursor />
-        <Overlays />
-        <MotionProvider>{children}</MotionProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en"><body>{children}</body></html>;
 }
